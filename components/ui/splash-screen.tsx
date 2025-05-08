@@ -32,17 +32,8 @@ export function SplashScreen() {
     };
 
     return (
-        <div className="fixed inset-0 z-50">
-            <div className="splash-screen">
-                <div className="splash-logo">
-                    <Image
-                        src="/logo-horizontal-positive.svg"
-                        alt="Pupila Logo"
-                        width={216}
-                        height={25}
-                        priority
-                    />
-                </div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="splash-screen relative">
                 <div className="splash-carousel">
                     {carouselImages.map((src, index) => (
                         <div
@@ -60,18 +51,30 @@ export function SplashScreen() {
                         </div>
                     ))}
                 </div>
-                <div className="mt-8 flex gap-4">
-                    <Link href="/campanhas/nova">
-                        <button className="btn btn-primary">
-                            Criar Campanha
-                        </button>
-                    </Link>
-                    <Link href="/campanhas">
-                        <button className="btn btn-primary">
-                            Ver Campanhas
-                        </button>
-                    </Link>
-
+                {/* Container dos botões com fundo semi-transparente */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="flex gap-6 p-4 rounded-2xl backdrop-blur-md bg-black/5">
+                        <Link href="/campanhas/nova">
+                            <button className="group relative px-8 py-3 border border-white/30 rounded-xl overflow-hidden transition-all duration-300">
+                                {/* Fundo animado no hover */}
+                                <div className="absolute inset-0 w-0 bg-gradient-to-r from-brand-orange to-brand-orange/80 transition-all duration-500 ease-out group-hover:w-full" />
+                                {/* Texto do botão */}
+                                <span className="relative z-10 text-white text-lg font-normal tracking-wider transition-all duration-300">
+                                    Criar Campanha
+                                </span>
+                            </button>
+                        </Link>
+                        <Link href="/campanhas">
+                            <button className="group relative px-8 py-3 border border-white/30 rounded-xl overflow-hidden transition-all duration-300">
+                                {/* Fundo animado no hover */}
+                                <div className="absolute inset-0 w-0 bg-gradient-to-r from-brand-orange to-brand-orange/80 transition-all duration-500 ease-out group-hover:w-full" />
+                                {/* Texto do botão */}
+                                <span className="relative z-10 text-white text-lg font-normal tracking-wider transition-all duration-300">
+                                    Ver Campanhas
+                                </span>
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
