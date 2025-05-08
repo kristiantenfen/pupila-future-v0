@@ -12,12 +12,44 @@ export const opcoesDePlataformas = [
 
 // Configuração de formatos por plataforma
 const formatosPorPlataforma = {
-  instagram: ["feed-quadrado", "feed-retrato", "feed-paisagem", "stories", "carrossel", "reels"],
-  facebook: ["post-quadrado", "post-paisagem", "capa", "evento", "anuncio"],
-  twitter: ["post", "cabecalho", "card"],
-  linkedin: ["post-quadrado", "post-paisagem", "capa-empresa", "capa-perfil"],
-  web: ["leaderboard", "retangulo-medio", "skyscraper-largo", "retangulo-grande"],
-  impresso: ["cartao-visita", "flyer-a5", "poster-a4", "folder"],
+  instagram: [
+    { nome: "feed-quadrado", largura: 1080, altura: 1080 },
+    { nome: "feed-retrato", largura: 1080, altura: 1350 },
+    { nome: "feed-paisagem", largura: 1080, altura: 608 },
+    { nome: "stories", largura: 1080, altura: 1920 },
+    { nome: "carrossel", largura: 1080, altura: 1080 },
+    { nome: "reels", largura: 1080, altura: 1920 },
+  ],
+  facebook: [
+    { nome: "post-quadrado", largura: 1200, altura: 1200 },
+    { nome: "post-paisagem", largura: 1200, altura: 630 },
+    { nome: "capa", largura: 1640, altura: 924 },
+    { nome: "evento", largura: 1920, altura: 1080 },
+    { nome: "anuncio", largura: 1200, altura: 628 },
+  ],
+  twitter: [
+    { nome: "post", largura: 1600, altura: 900 },
+    { nome: "cabecalho", largura: 1500, altura: 500 },
+    { nome: "card", largura: 1200, altura: 628 },
+  ],
+  linkedin: [
+    { nome: "post-quadrado", largura: 1200, altura: 1200 },
+    { nome: "post-paisagem", largura: 1200, altura: 627 },
+    { nome: "capa-empresa", largura: 1584, altura: 396 },
+    { nome: "capa-perfil", largura: 1584, altura: 396 },
+  ],
+  web: [
+    { nome: "leaderboard", largura: 728, altura: 90 },
+    { nome: "retangulo-medio", largura: 300, altura: 250 },
+    { nome: "skyscraper-largo", largura: 160, altura: 600 },
+    { nome: "retangulo-grande", largura: 336, altura: 280 },
+  ],
+  impresso: [
+    { nome: "cartao-visita", largura: 1050, altura: 600 },
+    { nome: "flyer-a5", largura: 1748, altura: 2480 },
+    { nome: "poster-a4", largura: 2480, altura: 3508 },
+    { nome: "folder", largura: 2480, altura: 1748 },
+  ],
 }
 
 // Configurações de formatos com dimensões e especificações de grid
@@ -898,7 +930,7 @@ const configsFormatos = {
 }
 
 // Funções auxiliares para acessar configurações
-export function getFormatosPorPlataforma(plataforma: string): string[] {
+export function getFormatosPorPlataforma(plataforma: string): any[] {
   return formatosPorPlataforma[plataforma as keyof typeof formatosPorPlataforma] || []
 }
 
@@ -920,3 +952,5 @@ export function getConfigFormato(plataforma: string, formato: string): any {
 
   return config
 }
+
+export const configPlataformas = formatosPorPlataforma

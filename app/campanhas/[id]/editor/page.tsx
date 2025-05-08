@@ -20,6 +20,7 @@ import { useCampanhasStore } from "@/lib/campanhas-store"
 import { useToast } from "@/components/ui/use-toast"
 import { AlertCircle, Save } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { GeradorMultiFormatos } from "@/components/gerador-multi-formatos"
 
 export default function EditorCampanhaPage() {
   const params = useParams()
@@ -29,7 +30,7 @@ export default function EditorCampanhaPage() {
 
   const [selectedPlatform, setSelectedPlatform] = useState("instagram")
   const [selectedFormat, setSelectedFormat] = useState("")
-  const [availableFormats, setAvailableFormats] = useState<string[]>([])
+  const [availableFormats, setAvailableFormats] = useState<any[]>([])
   const [formatConfig, setFormatConfig] = useState<any>(null)
   const [showVersionHistory, setShowVersionHistory] = useState(false)
   const [activeTab, setActiveTab] = useState("preview")
@@ -75,8 +76,8 @@ export default function EditorCampanhaPage() {
 
     // Só definir o formato padrão se não houver um formato já selecionado
     // ou se o formato atual não estiver disponível na nova plataforma
-    if (!selectedFormat || !formatos.includes(selectedFormat)) {
-      setSelectedFormat(formatos[0] || "")
+    if (!selectedFormat || !formatos.some((f) => f.nome === selectedFormat)) {
+      setSelectedFormat(formatos.length > 0 ? formatos[0].nome : "")
     }
   }, [selectedPlatform, campanhaAtual, selectedFormat])
 
@@ -265,6 +266,29 @@ export default function EditorCampanhaPage() {
     }
   }
 
+  const aplicarElementosAoFormato = (elementosNovos: any[], formato: string) => {
+    // Verificar se o formato é válido
+    if (!formato || !availableFormats.some((f) => f.nome === formato)) {
+      toast({
+        title: "Formato inválido",
+        description: "O formato selecionado não está disponível para esta plataforma.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    // Mudar para o formato selecionado
+    setSelectedFormat(formato)
+
+    // Aplicar os elementos
+    setElementos(elementosNovos)
+
+    toast({
+      title: "Elementos aplicados",
+      description: `Os elementos foram aplicados ao formato ${formato}.`,
+    })
+  }
+
   return (
     <div className="container px-4 py-6 mx-auto md:px-6">
       <div className="flex items-center justify-between mb-6">
@@ -323,8 +347,8 @@ export default function EditorCampanhaPage() {
                   </SelectTrigger>
                   <SelectContent>
                     {availableFormats.map((format) => (
-                      <SelectItem key={format} value={format}>
-                        {format}
+                      <SelectItem key={format.nome} value={format.nome}>
+                        {format.nome}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -389,6 +413,16 @@ export default function EditorCampanhaPage() {
                 formato={selectedFormat}
                 onAplicarElementos={handleAplicarElementos}
               />
+
+              <div className="mt-4 pt-4 border-t">
+                <p className="text-sm text-gray-500 mb-3">Gere múltiplos formatos com ajuda de IA.</p>
+                <GeradorMultiFormatos
+                  elementos={elementos}
+                  plataformaAtual={selectedPlatform}
+                  formatoAtual={selectedFormat}
+                  onAplicarElementos={aplicarElementosAoFormato}
+                />
+              </div>
             </div>
           </div>
 
