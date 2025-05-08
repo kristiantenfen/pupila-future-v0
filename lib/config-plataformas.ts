@@ -8,7 +8,7 @@ export const opcoesDePlataformas = [
   { id: "linkedin", nome: "LinkedIn" },
   { id: "web", nome: "Banners Web" },
   { id: "impresso", nome: "Materiais Impressos" },
-]
+];
 
 // Configuração de formatos por plataforma
 const formatosPorPlataforma = {
@@ -50,7 +50,7 @@ const formatosPorPlataforma = {
     { nome: "poster-a4", largura: 2480, altura: 3508 },
     { nome: "folder", largura: 2480, altura: 1748 },
   ],
-}
+};
 
 // Configurações de formatos com dimensões e especificações de grid
 const configsFormatos = {
@@ -61,9 +61,18 @@ const configsFormatos = {
     height: 1080,
     grid: { columns: 18, rows: 18 }, // Grid proporcional 1:1
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 16, height: 8 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 18, height: 18 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 16, height: 8 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 18, height: 18 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -84,7 +93,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 13, width: 16, height: 4 },
-        conteudo: { texto: "Sua mensagem de campanha aqui", fontSize: "24px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem de campanha aqui",
+          fontSize: "24px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
         camada: 10, // Camada intermediária
       },
     ],
@@ -95,9 +109,18 @@ const configsFormatos = {
     height: 1350,
     grid: { columns: 18, rows: 22 }, // Grid proporcional 4:5
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 16, height: 8 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 18, height: 22 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 16, height: 8 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 18, height: 22 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -116,13 +139,22 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 15, width: 16, height: 4 },
-        conteudo: { texto: "Sua mensagem de campanha aqui", fontSize: "24px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem de campanha aqui",
+          fontSize: "24px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
       {
         id: "default-cta",
         tipo: "cta",
         posicaoGrid: { x: 6, y: 19, width: 6, height: 2 },
-        conteudo: { texto: "Saiba Mais", backgroundColor: "#0070f3", fontSize: "16px" },
+        conteudo: {
+          texto: "Saiba Mais",
+          backgroundColor: "#0070f3",
+          fontSize: "16px",
+        },
       },
     ],
   },
@@ -132,9 +164,18 @@ const configsFormatos = {
     height: 608,
     grid: { columns: 18, rows: 10 }, // Grid proporcional 16:9
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 16, height: 6 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 18, height: 10 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 16, height: 6 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 18, height: 10 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -153,7 +194,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 5, width: 16, height: 4 },
-        conteudo: { texto: "Sua mensagem de campanha aqui", fontSize: "24px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem de campanha aqui",
+          fontSize: "24px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -163,10 +209,22 @@ const configsFormatos = {
     height: 1920,
     grid: { columns: 18, rows: 32 }, // Grid proporcional 9:16
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo"] },
-      texto: { tamanhoMaximo: { width: 16, height: 10 }, zonasPermitidas: ["meio"] },
-      imagem: { tamanhoMaximo: { width: 18, height: 32 }, zonasPermitidas: ["completo"] },
-      cta: { tamanhoMaximo: { width: 10, height: 3 }, zonasPermitidas: ["base"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 16, height: 10 },
+        zonasPermitidas: ["meio"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 18, height: 32 },
+        zonasPermitidas: ["completo"],
+      },
+      cta: {
+        tamanhoMaximo: { width: 10, height: 3 },
+        zonasPermitidas: ["base"],
+      },
     },
     elementosPadrao: [
       {
@@ -187,14 +245,23 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 14, width: 16, height: 6 },
-        conteudo: { texto: "Sua mensagem de campanha aqui", fontSize: "32px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem de campanha aqui",
+          fontSize: "32px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
         camada: 10, // Camada intermediária
       },
       {
         id: "default-cta",
         tipo: "cta",
         posicaoGrid: { x: 4, y: 27, width: 10, height: 3 },
-        conteudo: { texto: "Deslize para Cima", backgroundColor: "#0070f3", fontSize: "18px" },
+        conteudo: {
+          texto: "Deslize para Cima",
+          backgroundColor: "#0070f3",
+          fontSize: "18px",
+        },
         camada: 20, // Camada mais alta para o CTA
       },
     ],
@@ -205,10 +272,22 @@ const configsFormatos = {
     height: 1920,
     grid: { columns: 18, rows: 32 }, // Grid proporcional 9:16
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo"] },
-      texto: { tamanhoMaximo: { width: 16, height: 10 }, zonasPermitidas: ["meio"] },
-      imagem: { tamanhoMaximo: { width: 18, height: 32 }, zonasPermitidas: ["completo"] },
-      cta: { tamanhoMaximo: { width: 10, height: 3 }, zonasPermitidas: ["base"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 16, height: 10 },
+        zonasPermitidas: ["meio"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 18, height: 32 },
+        zonasPermitidas: ["completo"],
+      },
+      cta: {
+        tamanhoMaximo: { width: 10, height: 3 },
+        zonasPermitidas: ["base"],
+      },
     },
     elementosPadrao: [
       {
@@ -221,7 +300,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 14, width: 16, height: 6 },
-        conteudo: { texto: "Sua mensagem de campanha aqui", fontSize: "32px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem de campanha aqui",
+          fontSize: "32px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -231,9 +315,18 @@ const configsFormatos = {
     height: 1080,
     grid: { columns: 18, rows: 18 }, // Grid proporcional 1:1
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 16, height: 8 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 18, height: 18 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 16, height: 8 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 18, height: 18 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -246,7 +339,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 13, width: 16, height: 4 },
-        conteudo: { texto: "Sua mensagem de campanha aqui", fontSize: "24px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem de campanha aqui",
+          fontSize: "24px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -258,9 +356,18 @@ const configsFormatos = {
     height: 1200,
     grid: { columns: 20, rows: 20 }, // Grid proporcional 1:1
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 18, height: 8 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 20, height: 20 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 18, height: 8 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 20, height: 20 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -279,7 +386,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 14, width: 18, height: 5 },
-        conteudo: { texto: "Sua mensagem de campanha aqui", fontSize: "24px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem de campanha aqui",
+          fontSize: "24px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -289,9 +401,18 @@ const configsFormatos = {
     height: 630,
     grid: { columns: 20, rows: 10 }, // Grid proporcional 1.9:1
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 18, height: 6 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 20, height: 10 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 18, height: 6 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 20, height: 10 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -304,7 +425,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 4, width: 18, height: 4 },
-        conteudo: { texto: "Sua mensagem de campanha aqui", fontSize: "24px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem de campanha aqui",
+          fontSize: "24px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -314,9 +440,18 @@ const configsFormatos = {
     height: 924,
     grid: { columns: 24, rows: 14 }, // Grid proporcional 16:9 aproximado
     regras: {
-      logo: { tamanhoMaximo: { width: 8, height: 4 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 20, height: 8 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 24, height: 14 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 8, height: 4 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 20, height: 8 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 24, height: 14 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -329,7 +464,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 2, y: 5, width: 20, height: 4 },
-        conteudo: { texto: "Sua mensagem de campanha aqui", fontSize: "32px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem de campanha aqui",
+          fontSize: "32px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -339,9 +479,18 @@ const configsFormatos = {
     height: 1080,
     grid: { columns: 32, rows: 18 }, // Grid proporcional 16:9
     regras: {
-      logo: { tamanhoMaximo: { width: 8, height: 4 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 24, height: 10 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 32, height: 18 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 8, height: 4 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 24, height: 10 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 32, height: 18 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -354,13 +503,23 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 4, y: 6, width: 24, height: 4 },
-        conteudo: { texto: "Nome do Evento", fontSize: "42px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Nome do Evento",
+          fontSize: "42px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
       {
         id: "default-texto-2",
         tipo: "texto",
         posicaoGrid: { x: 8, y: 10, width: 16, height: 2 },
-        conteudo: { texto: "Data e Local", fontSize: "24px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Data e Local",
+          fontSize: "24px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -370,9 +529,18 @@ const configsFormatos = {
     height: 628,
     grid: { columns: 20, rows: 10 }, // Grid proporcional 1.9:1
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 18, height: 6 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 20, height: 10 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 18, height: 6 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 20, height: 10 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -385,13 +553,22 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 3, width: 18, height: 3 },
-        conteudo: { texto: "Sua mensagem de anúncio aqui", fontSize: "28px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem de anúncio aqui",
+          fontSize: "28px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
       {
         id: "default-cta",
         tipo: "cta",
         posicaoGrid: { x: 7, y: 7, width: 6, height: 2 },
-        conteudo: { texto: "Comprar Agora", backgroundColor: "#0070f3", fontSize: "16px" },
+        conteudo: {
+          texto: "Comprar Agora",
+          backgroundColor: "#0070f3",
+          fontSize: "16px",
+        },
       },
     ],
   },
@@ -403,9 +580,18 @@ const configsFormatos = {
     height: 900,
     grid: { columns: 32, rows: 18 }, // Grid proporcional 16:9
     regras: {
-      logo: { tamanhoMaximo: { width: 8, height: 4 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 28, height: 10 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 32, height: 18 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 8, height: 4 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 28, height: 10 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 32, height: 18 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -418,7 +604,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 2, y: 6, width: 28, height: 6 },
-        conteudo: { texto: "Sua mensagem de tweet aqui", fontSize: "32px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem de tweet aqui",
+          fontSize: "32px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -428,9 +619,18 @@ const configsFormatos = {
     height: 500,
     grid: { columns: 30, rows: 10 }, // Grid proporcional 3:1
     regras: {
-      logo: { tamanhoMaximo: { width: 8, height: 4 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 24, height: 6 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 30, height: 10 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 8, height: 4 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 24, height: 6 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 30, height: 10 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -453,9 +653,18 @@ const configsFormatos = {
     height: 628,
     grid: { columns: 24, rows: 12 }, // Grid proporcional 1.9:1
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 20, height: 8 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 24, height: 12 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 20, height: 8 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 24, height: 12 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -468,13 +677,23 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 2, y: 4, width: 20, height: 3 },
-        conteudo: { texto: "Título do seu card", fontSize: "28px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Título do seu card",
+          fontSize: "28px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
       {
         id: "default-texto-2",
         tipo: "texto",
         posicaoGrid: { x: 4, y: 8, width: 16, height: 2 },
-        conteudo: { texto: "Descrição do card", fontSize: "18px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Descrição do card",
+          fontSize: "18px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -486,9 +705,18 @@ const configsFormatos = {
     height: 1200,
     grid: { columns: 20, rows: 20 }, // Grid proporcional 1:1
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 18, height: 8 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 20, height: 20 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 18, height: 8 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 20, height: 20 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -507,7 +735,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 14, width: 18, height: 5 },
-        conteudo: { texto: "Sua mensagem profissional aqui", fontSize: "24px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem profissional aqui",
+          fontSize: "24px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -517,9 +750,18 @@ const configsFormatos = {
     height: 627,
     grid: { columns: 24, rows: 12 }, // Grid proporcional 1.9:1
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 20, height: 8 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 24, height: 12 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 20, height: 8 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 24, height: 12 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -538,7 +780,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 2, y: 6, width: 20, height: 4 },
-        conteudo: { texto: "Sua mensagem profissional aqui", fontSize: "24px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem profissional aqui",
+          fontSize: "24px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -548,9 +795,18 @@ const configsFormatos = {
     height: 396,
     grid: { columns: 32, rows: 8 }, // Grid proporcional 4:1
     regras: {
-      logo: { tamanhoMaximo: { width: 8, height: 4 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 24, height: 6 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 32, height: 8 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 8, height: 4 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 24, height: 6 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 32, height: 8 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -563,7 +819,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 4, y: 2, width: 24, height: 4 },
-        conteudo: { texto: "Sua empresa", fontSize: "32px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua empresa",
+          fontSize: "32px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -573,9 +834,18 @@ const configsFormatos = {
     height: 396,
     grid: { columns: 32, rows: 8 }, // Grid proporcional 4:1
     regras: {
-      logo: { tamanhoMaximo: { width: 8, height: 4 }, zonasPermitidas: ["topo", "base"] },
-      texto: { tamanhoMaximo: { width: 24, height: 6 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 32, height: 8 }, zonasPermitidas: ["completo"] },
+      logo: {
+        tamanhoMaximo: { width: 8, height: 4 },
+        zonasPermitidas: ["topo", "base"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 24, height: 6 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 32, height: 8 },
+        zonasPermitidas: ["completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -588,7 +858,12 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 12, y: 2, width: 16, height: 4 },
-        conteudo: { texto: "Seu perfil profissional", fontSize: "28px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Seu perfil profissional",
+          fontSize: "28px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
     ],
   },
@@ -600,9 +875,18 @@ const configsFormatos = {
     height: 90,
     grid: { columns: 24, rows: 3 }, // Grid proporcional 8:1
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 3 }, zonasPermitidas: ["esquerda"] },
-      texto: { tamanhoMaximo: { width: 12, height: 3 }, zonasPermitidas: ["meio"] },
-      cta: { tamanhoMaximo: { width: 6, height: 2 }, zonasPermitidas: ["direita"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 3 },
+        zonasPermitidas: ["esquerda"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 12, height: 3 },
+        zonasPermitidas: ["meio"],
+      },
+      cta: {
+        tamanhoMaximo: { width: 6, height: 2 },
+        zonasPermitidas: ["direita"],
+      },
     },
     elementosPadrao: [
       {
@@ -615,13 +899,22 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 5, y: 0, width: 12, height: 3 },
-        conteudo: { texto: "Sua mensagem de campanha aqui", fontSize: "16px", color: "#000000", textAlign: "left" },
+        conteudo: {
+          texto: "Sua mensagem de campanha aqui",
+          fontSize: "16px",
+          color: "#000000",
+          textAlign: "left",
+        },
       },
       {
         id: "default-cta",
         tipo: "cta",
         posicaoGrid: { x: 18, y: 0, width: 5, height: 3 },
-        conteudo: { texto: "Saiba Mais", backgroundColor: "#0070f3", fontSize: "14px" },
+        conteudo: {
+          texto: "Saiba Mais",
+          backgroundColor: "#0070f3",
+          fontSize: "14px",
+        },
       },
     ],
   },
@@ -631,9 +924,18 @@ const configsFormatos = {
     height: 250,
     grid: { columns: 12, rows: 10 }, // Grid proporcional 6:5
     regras: {
-      logo: { tamanhoMaximo: { width: 4, height: 2 }, zonasPermitidas: ["topo"] },
-      texto: { tamanhoMaximo: { width: 10, height: 4 }, zonasPermitidas: ["meio"] },
-      cta: { tamanhoMaximo: { width: 8, height: 2 }, zonasPermitidas: ["base"] },
+      logo: {
+        tamanhoMaximo: { width: 4, height: 2 },
+        zonasPermitidas: ["topo"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 10, height: 4 },
+        zonasPermitidas: ["meio"],
+      },
+      cta: {
+        tamanhoMaximo: { width: 8, height: 2 },
+        zonasPermitidas: ["base"],
+      },
     },
     elementosPadrao: [
       {
@@ -646,13 +948,22 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 4, width: 10, height: 2 },
-        conteudo: { texto: "Sua mensagem aqui", fontSize: "18px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem aqui",
+          fontSize: "18px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
       {
         id: "default-cta",
         tipo: "cta",
         posicaoGrid: { x: 2, y: 7, width: 8, height: 2 },
-        conteudo: { texto: "Clique Aqui", backgroundColor: "#0070f3", fontSize: "14px" },
+        conteudo: {
+          texto: "Clique Aqui",
+          backgroundColor: "#0070f3",
+          fontSize: "14px",
+        },
       },
     ],
   },
@@ -662,9 +973,18 @@ const configsFormatos = {
     height: 600,
     grid: { columns: 8, rows: 30 }, // Grid proporcional 4:15
     regras: {
-      logo: { tamanhoMaximo: { width: 6, height: 4 }, zonasPermitidas: ["topo"] },
-      texto: { tamanhoMaximo: { width: 6, height: 10 }, zonasPermitidas: ["meio"] },
-      cta: { tamanhoMaximo: { width: 6, height: 4 }, zonasPermitidas: ["base"] },
+      logo: {
+        tamanhoMaximo: { width: 6, height: 4 },
+        zonasPermitidas: ["topo"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 6, height: 10 },
+        zonasPermitidas: ["meio"],
+      },
+      cta: {
+        tamanhoMaximo: { width: 6, height: 4 },
+        zonasPermitidas: ["base"],
+      },
     },
     elementosPadrao: [
       {
@@ -683,13 +1003,22 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 12, width: 6, height: 6 },
-        conteudo: { texto: "Sua mensagem aqui", fontSize: "16px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem aqui",
+          fontSize: "16px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
       {
         id: "default-cta",
         tipo: "cta",
         posicaoGrid: { x: 1, y: 24, width: 6, height: 4 },
-        conteudo: { texto: "Saiba Mais", backgroundColor: "#0070f3", fontSize: "14px" },
+        conteudo: {
+          texto: "Saiba Mais",
+          backgroundColor: "#0070f3",
+          fontSize: "14px",
+        },
       },
     ],
   },
@@ -699,9 +1028,18 @@ const configsFormatos = {
     height: 280,
     grid: { columns: 12, rows: 10 }, // Grid proporcional 6:5
     regras: {
-      logo: { tamanhoMaximo: { width: 4, height: 2 }, zonasPermitidas: ["topo"] },
-      texto: { tamanhoMaximo: { width: 10, height: 4 }, zonasPermitidas: ["meio"] },
-      cta: { tamanhoMaximo: { width: 8, height: 2 }, zonasPermitidas: ["base"] },
+      logo: {
+        tamanhoMaximo: { width: 4, height: 2 },
+        zonasPermitidas: ["topo"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 10, height: 4 },
+        zonasPermitidas: ["meio"],
+      },
+      cta: {
+        tamanhoMaximo: { width: 8, height: 2 },
+        zonasPermitidas: ["base"],
+      },
     },
     elementosPadrao: [
       {
@@ -714,13 +1052,22 @@ const configsFormatos = {
         id: "default-texto",
         tipo: "texto",
         posicaoGrid: { x: 1, y: 4, width: 10, height: 2 },
-        conteudo: { texto: "Sua mensagem aqui", fontSize: "20px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Sua mensagem aqui",
+          fontSize: "20px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
       {
         id: "default-cta",
         tipo: "cta",
         posicaoGrid: { x: 2, y: 7, width: 8, height: 2 },
-        conteudo: { texto: "Clique Aqui", backgroundColor: "#0070f3", fontSize: "16px" },
+        conteudo: {
+          texto: "Clique Aqui",
+          backgroundColor: "#0070f3",
+          fontSize: "16px",
+        },
       },
     ],
   },
@@ -732,8 +1079,14 @@ const configsFormatos = {
     height: 600, // 9x5cm em 300dpi
     grid: { columns: 21, rows: 12 }, // Grid proporcional 7:4
     regras: {
-      logo: { tamanhoMaximo: { width: 7, height: 4 }, zonasPermitidas: ["topo", "esquerda"] },
-      texto: { tamanhoMaximo: { width: 14, height: 8 }, zonasPermitidas: ["meio", "direita"] },
+      logo: {
+        tamanhoMaximo: { width: 7, height: 4 },
+        zonasPermitidas: ["topo", "esquerda"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 14, height: 8 },
+        zonasPermitidas: ["meio", "direita"],
+      },
     },
     elementosPadrao: [
       {
@@ -746,13 +1099,23 @@ const configsFormatos = {
         id: "default-texto-nome",
         tipo: "texto",
         posicaoGrid: { x: 8, y: 2, width: 12, height: 2 },
-        conteudo: { texto: "Nome Completo", fontSize: "18px", color: "#000000", textAlign: "left" },
+        conteudo: {
+          texto: "Nome Completo",
+          fontSize: "18px",
+          color: "#000000",
+          textAlign: "left",
+        },
       },
       {
         id: "default-texto-cargo",
         tipo: "texto",
         posicaoGrid: { x: 8, y: 4, width: 12, height: 2 },
-        conteudo: { texto: "Cargo / Função", fontSize: "14px", color: "#666666", textAlign: "left" },
+        conteudo: {
+          texto: "Cargo / Função",
+          fontSize: "14px",
+          color: "#666666",
+          textAlign: "left",
+        },
       },
       {
         id: "default-texto-contato",
@@ -773,9 +1136,18 @@ const configsFormatos = {
     height: 2480, // A5 em 300dpi
     grid: { columns: 21, rows: 30 }, // Grid proporcional A5
     regras: {
-      logo: { tamanhoMaximo: { width: 10, height: 6 }, zonasPermitidas: ["topo"] },
-      texto: { tamanhoMaximo: { width: 17, height: 15 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 21, height: 20 }, zonasPermitidas: ["meio", "completo"] },
+      logo: {
+        tamanhoMaximo: { width: 10, height: 6 },
+        zonasPermitidas: ["topo"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 17, height: 15 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 21, height: 20 },
+        zonasPermitidas: ["meio", "completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -794,14 +1166,20 @@ const configsFormatos = {
         id: "default-texto-titulo",
         tipo: "texto",
         posicaoGrid: { x: 2, y: 8, width: 17, height: 4 },
-        conteudo: { texto: "Título Principal", fontSize: "32px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Título Principal",
+          fontSize: "32px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
       {
         id: "default-texto-descricao",
         tipo: "texto",
         posicaoGrid: { x: 3, y: 14, width: 15, height: 8 },
         conteudo: {
-          texto: "Descrição do evento ou promoção. Adicione detalhes importantes aqui.",
+          texto:
+            "Descrição do evento ou promoção. Adicione detalhes importantes aqui.",
           fontSize: "18px",
           color: "#ffffff",
           textAlign: "center",
@@ -826,9 +1204,18 @@ const configsFormatos = {
     height: 3508, // A4 em 300dpi
     grid: { columns: 24, rows: 34 }, // Grid proporcional A4
     regras: {
-      logo: { tamanhoMaximo: { width: 12, height: 6 }, zonasPermitidas: ["topo"] },
-      texto: { tamanhoMaximo: { width: 20, height: 16 }, zonasPermitidas: ["meio", "base"] },
-      imagem: { tamanhoMaximo: { width: 24, height: 20 }, zonasPermitidas: ["meio", "completo"] },
+      logo: {
+        tamanhoMaximo: { width: 12, height: 6 },
+        zonasPermitidas: ["topo"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 20, height: 16 },
+        zonasPermitidas: ["meio", "base"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 24, height: 20 },
+        zonasPermitidas: ["meio", "completo"],
+      },
     },
     elementosPadrao: [
       {
@@ -847,20 +1234,31 @@ const configsFormatos = {
         id: "default-texto-titulo",
         tipo: "texto",
         posicaoGrid: { x: 2, y: 8, width: 20, height: 4 },
-        conteudo: { texto: "Título Principal", fontSize: "42px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Título Principal",
+          fontSize: "42px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
       {
         id: "default-texto-subtitulo",
         tipo: "texto",
         posicaoGrid: { x: 4, y: 12, width: 16, height: 2 },
-        conteudo: { texto: "Subtítulo ou slogan", fontSize: "24px", color: "#ffffff", textAlign: "center" },
+        conteudo: {
+          texto: "Subtítulo ou slogan",
+          fontSize: "24px",
+          color: "#ffffff",
+          textAlign: "center",
+        },
       },
       {
         id: "default-texto-descricao",
         tipo: "texto",
         posicaoGrid: { x: 4, y: 16, width: 16, height: 10 },
         conteudo: {
-          texto: "Descrição detalhada do evento, produto ou serviço. Adicione informações importantes aqui.",
+          texto:
+            "Descrição detalhada do evento, produto ou serviço. Adicione informações importantes aqui.",
           fontSize: "18px",
           color: "#ffffff",
           textAlign: "center",
@@ -871,7 +1269,8 @@ const configsFormatos = {
         tipo: "texto",
         posicaoGrid: { x: 4, y: 28, width: 16, height: 4 },
         conteudo: {
-          texto: "Contato: email@empresa.com\nTelefone: (11) 98765-4321\nwww.empresa.com",
+          texto:
+            "Contato: email@empresa.com\nTelefone: (11) 98765-4321\nwww.empresa.com",
           fontSize: "16px",
           color: "#ffffff",
           textAlign: "center",
@@ -885,9 +1284,18 @@ const configsFormatos = {
     height: 1748, // A4 paisagem em 300dpi
     grid: { columns: 34, rows: 24 }, // Grid proporcional A4 paisagem
     regras: {
-      logo: { tamanhoMaximo: { width: 12, height: 6 }, zonasPermitidas: ["topo", "esquerda"] },
-      texto: { tamanhoMaximo: { width: 28, height: 16 }, zonasPermitidas: ["meio", "direita"] },
-      imagem: { tamanhoMaximo: { width: 16, height: 16 }, zonasPermitidas: ["meio", "esquerda"] },
+      logo: {
+        tamanhoMaximo: { width: 12, height: 6 },
+        zonasPermitidas: ["topo", "esquerda"],
+      },
+      texto: {
+        tamanhoMaximo: { width: 28, height: 16 },
+        zonasPermitidas: ["meio", "direita"],
+      },
+      imagem: {
+        tamanhoMaximo: { width: 16, height: 16 },
+        zonasPermitidas: ["meio", "esquerda"],
+      },
     },
     elementosPadrao: [
       {
@@ -906,14 +1314,20 @@ const configsFormatos = {
         id: "default-texto-titulo",
         tipo: "texto",
         posicaoGrid: { x: 12, y: 4, width: 20, height: 4 },
-        conteudo: { texto: "Título Principal", fontSize: "36px", color: "#ffffff", textAlign: "left" },
+        conteudo: {
+          texto: "Título Principal",
+          fontSize: "36px",
+          color: "#ffffff",
+          textAlign: "left",
+        },
       },
       {
         id: "default-texto-descricao",
         tipo: "texto",
         posicaoGrid: { x: 12, y: 10, width: 20, height: 10 },
         conteudo: {
-          texto: "Descrição detalhada do produto, serviço ou evento. Adicione informações importantes aqui.",
+          texto:
+            "Descrição detalhada do produto, serviço ou evento. Adicione informações importantes aqui.",
           fontSize: "18px",
           color: "#ffffff",
           textAlign: "left",
@@ -927,30 +1341,36 @@ const configsFormatos = {
       },
     ],
   },
-}
+};
 
 // Funções auxiliares para acessar configurações
 export function getFormatosPorPlataforma(plataforma: string): any[] {
-  return formatosPorPlataforma[plataforma as keyof typeof formatosPorPlataforma] || []
+  // Revertendo para a implementação original, mais eficiente
+  return (
+    formatosPorPlataforma[plataforma as keyof typeof formatosPorPlataforma] ||
+    []
+  );
 }
 
 export function getConfigFormato(plataforma: string, formato: string): any {
-  const key = `${plataforma}/${formato}`
-  const config = configsFormatos[key as keyof typeof configsFormatos]
+  const key = `${plataforma}/${formato}`;
+  const config = configsFormatos[key as keyof typeof configsFormatos];
 
   // Se a configuração não existir, retorne um objeto padrão
   if (!config) {
-    console.warn(`Configuração não encontrada para ${key}. Usando configuração padrão.`)
+    console.warn(
+      `Configuração não encontrada para ${key}. Usando configuração padrão.`
+    );
     return {
       nome: `${plataforma} - ${formato}`,
       width: 1080,
       height: 1080,
       grid: { columns: 18, rows: 18 },
       elementosPadrao: [],
-    }
+    };
   }
 
-  return config
+  return config;
 }
 
-export const configPlataformas = formatosPorPlataforma
+export const configPlataformas = formatosPorPlataforma;

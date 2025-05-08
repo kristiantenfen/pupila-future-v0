@@ -1,28 +1,48 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
-import { PlusCircle, Trash2, MoveHorizontal, MoveVertical, Copy, GripHorizontal } from "lucide-react"
-import { PreviewPeca } from "@/components/preview-peca"
-import { Checkbox } from "@/components/ui/checkbox"
-import { BibliotecaImagens } from "@/components/biblioteca-imagens"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import {
+  PlusCircle,
+  Trash2,
+  MoveHorizontal,
+  MoveVertical,
+  Copy,
+  GripHorizontal,
+} from "lucide-react";
+import { PreviewPeca } from "@/components/preview-peca";
+import { Checkbox } from "@/components/ui/checkbox";
+import { BibliotecaImagens } from "@/components/biblioteca-imagens";
 
 interface EditorElementosProps {
-  formatConfig: any
-  elementos: any[]
-  setElementos: (elementos: any[]) => void
+  formatConfig: any;
+  elementos: any[];
+  setElementos: (elementos: any[]) => void;
 }
 
-export function EditorElementos({ formatConfig, elementos, setElementos }: EditorElementosProps) {
-  const [selectedElementIndex, setSelectedElementIndex] = useState<number | null>(null)
+export function EditorElementos({
+  formatConfig,
+  elementos,
+  setElementos,
+}: EditorElementosProps) {
+  const [selectedElementIndex, setSelectedElementIndex] = useState<
+    number | null
+  >(null);
 
-  const selectedElement = selectedElementIndex !== null ? elementos[selectedElementIndex] : null
+  const selectedElement =
+    selectedElementIndex !== null ? elementos[selectedElementIndex] : null;
 
   // Adiciona um novo elemento
   const addElement = (tipo: string) => {
@@ -36,21 +56,26 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
         height: 2,
       },
       conteudo: getDefaultContentForType(tipo),
-    }
+    };
 
-    setElementos([...elementos, newElement])
-    setSelectedElementIndex(elementos.length)
-  }
+    setElementos([...elementos, newElement]);
+    setSelectedElementIndex(elementos.length);
+  };
 
   // Obtém conteúdo padrão baseado no tipo de elemento
   const getDefaultContentForType = (tipo: string) => {
     switch (tipo) {
       case "logo":
-        return { src: "" }
+        return { src: "" };
       case "texto":
-        return { texto: "Texto de Exemplo", fontSize: "16px", color: "#000000", textAlign: "left" }
+        return {
+          texto: "Texto de Exemplo",
+          fontSize: "16px",
+          color: "#000000",
+          textAlign: "left",
+        };
       case "imagem":
-        return { src: "", alt: "Imagem" }
+        return { src: "", alt: "Imagem" };
       case "imagemPersonalizada":
         return {
           src: "",
@@ -59,73 +84,79 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
           opacidade: 100,
           borda: false,
           bordaRadius: "0px",
-        }
+        };
       case "cta":
-        return { texto: "Saiba Mais", backgroundColor: "#0070f3", fontSize: "16px" }
+        return {
+          texto: "Saiba Mais",
+          backgroundColor: "#0070f3",
+          fontSize: "16px",
+        };
       default:
-        return {}
+        return {};
     }
-  }
+  };
 
   // Atualiza propriedades do elemento
   const updateElement = (updates: any) => {
-    if (selectedElementIndex === null) return
+    if (selectedElementIndex === null) return;
 
-    const updatedElements = [...elementos]
+    const updatedElements = [...elementos];
     updatedElements[selectedElementIndex] = {
       ...updatedElements[selectedElementIndex],
       ...updates,
-    }
+    };
 
-    setElementos(updatedElements)
-  }
+    setElementos(updatedElements);
+  };
 
   // Atualiza conteúdo do elemento
   const updateElementContent = (contentUpdates: any) => {
-    if (selectedElementIndex === null) return
+    if (selectedElementIndex === null) return;
 
-    const updatedElements = [...elementos]
+    const updatedElements = [...elementos];
     updatedElements[selectedElementIndex] = {
       ...updatedElements[selectedElementIndex],
       conteudo: {
         ...updatedElements[selectedElementIndex].conteudo,
         ...contentUpdates,
       },
-    }
+    };
 
-    setElementos(updatedElements)
-  }
+    setElementos(updatedElements);
+  };
 
   // Atualiza posição do elemento
   const updateElementPosition = (positionUpdates: any) => {
-    if (selectedElementIndex === null) return
+    if (selectedElementIndex === null) return;
 
-    const updatedElements = [...elementos]
+    const updatedElements = [...elementos];
     updatedElements[selectedElementIndex] = {
       ...updatedElements[selectedElementIndex],
       posicaoGrid: {
         ...updatedElements[selectedElementIndex].posicaoGrid,
         ...positionUpdates,
       },
-    }
+    };
 
-    setElementos(updatedElements)
-  }
+    setElementos(updatedElements);
+  };
 
   // Deleta elemento selecionado
   const deleteElement = () => {
-    if (selectedElementIndex === null) return
+    if (selectedElementIndex === null) return;
 
-    const updatedElements = elementos.filter((_, index) => index !== selectedElementIndex)
-    setElementos(updatedElements)
-    setSelectedElementIndex(null)
-  }
+    const updatedElements = elementos.filter(
+      (_, index) => index !== selectedElementIndex
+    );
+    setElementos(updatedElements);
+    setSelectedElementIndex(null);
+  };
 
   // Duplica elemento selecionado
   const duplicateElement = () => {
-    if (selectedElementIndex === null) return
+    if (selectedElementIndex === null) return;
 
-    const elementToDuplicate = elementos[selectedElementIndex]
+    const elementToDuplicate = elementos[selectedElementIndex];
     const duplicatedElement = {
       ...JSON.parse(JSON.stringify(elementToDuplicate)),
       id: `elemento-${Date.now()}`,
@@ -133,17 +164,17 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
         ...elementToDuplicate.posicaoGrid,
         x: Math.min(
           elementToDuplicate.posicaoGrid.x + 1,
-          formatConfig.grid.columns - elementToDuplicate.posicaoGrid.width,
+          formatConfig.grid.columns - elementToDuplicate.posicaoGrid.width
         ),
       },
-    }
+    };
 
-    setElementos([...elementos, duplicatedElement])
-    setSelectedElementIndex(elementos.length)
-  }
+    setElementos([...elementos, duplicatedElement]);
+    setSelectedElementIndex(elementos.length);
+  };
 
   return (
-    <div className="grid gap-6 lg:grid-cols-12">
+    <div className="gap-6">
       {/* Lista de elementos */}
       <div className="lg:col-span-4">
         <Card>
@@ -153,19 +184,39 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
           <CardContent>
             <div className="space-y-4">
               <div className="flex flex-wrap gap-2">
-                <Button size="sm" variant="outline" onClick={() => addElement("logo")}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => addElement("logo")}
+                >
                   <PlusCircle className="w-4 h-4 mr-1" /> Logo
                 </Button>
-                <Button size="sm" variant="outline" onClick={() => addElement("texto")}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => addElement("texto")}
+                >
                   <PlusCircle className="w-4 h-4 mr-1" /> Texto
                 </Button>
-                <Button size="sm" variant="outline" onClick={() => addElement("imagem")}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => addElement("imagem")}
+                >
                   <PlusCircle className="w-4 h-4 mr-1" /> Imagem
                 </Button>
-                <Button size="sm" variant="outline" onClick={() => addElement("imagemPersonalizada")}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => addElement("imagemPersonalizada")}
+                >
                   <PlusCircle className="w-4 h-4 mr-1" /> Imagem Personalizada
                 </Button>
-                <Button size="sm" variant="outline" onClick={() => addElement("cta")}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => addElement("cta")}
+                >
                   <PlusCircle className="w-4 h-4 mr-1" /> CTA
                 </Button>
               </div>
@@ -173,33 +224,41 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
               <div className="border rounded-md divide-y">
                 {elementos.length === 0 ? (
                   <div className="p-4 text-sm text-center text-gray-500">
-                    Nenhum elemento adicionado. Adicione elementos usando os botões acima.
+                    Nenhum elemento adicionado. Adicione elementos usando os
+                    botões acima.
                   </div>
                 ) : (
                   elementos.map((elemento, index) => (
                     <div
                       key={elemento.id || index}
-                      className={`p-3 cursor-pointer hover:bg-gray-50 ${selectedElementIndex === index ? "bg-blue-50" : ""}`}
+                      className={`p-3 cursor-pointer hover:bg-gray-50 ${
+                        selectedElementIndex === index ? "bg-blue-50" : ""
+                      }`}
                       onClick={() => setSelectedElementIndex(index)}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <GripHorizontal className="w-4 h-4 text-gray-400" />
-                          <span className="font-medium capitalize">{elemento.tipo}</span>
+                          <span className="font-medium capitalize">
+                            {elemento.tipo}
+                          </span>
                         </div>
                         <div className="flex space-x-1">
                           <Button
                             size="icon"
                             variant="ghost"
                             onClick={(e) => {
-                              e.stopPropagation()
-                              const newElementos = [...elementos]
-                              const elemento = newElementos[index]
+                              e.stopPropagation();
+                              const newElementos = [...elementos];
+                              const elemento = newElementos[index];
                               newElementos[index] = {
                                 ...elemento,
-                                camada: Math.min(100, (elemento.camada || 10) + 5),
-                              }
-                              setElementos(newElementos)
+                                camada: Math.min(
+                                  100,
+                                  (elemento.camada || 10) + 5
+                                ),
+                              };
+                              setElementos(newElementos);
                             }}
                             title="Trazer para frente"
                           >
@@ -224,14 +283,17 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                             size="icon"
                             variant="ghost"
                             onClick={(e) => {
-                              e.stopPropagation()
-                              const newElementos = [...elementos]
-                              const elemento = newElementos[index]
+                              e.stopPropagation();
+                              const newElementos = [...elementos];
+                              const elemento = newElementos[index];
                               newElementos[index] = {
                                 ...elemento,
-                                camada: Math.max(1, (elemento.camada || 10) - 5),
-                              }
-                              setElementos(newElementos)
+                                camada: Math.max(
+                                  1,
+                                  (elemento.camada || 10) - 5
+                                ),
+                              };
+                              setElementos(newElementos);
                             }}
                             title="Enviar para trás"
                           >
@@ -257,8 +319,8 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                             size="icon"
                             variant="ghost"
                             onClick={(e) => {
-                              e.stopPropagation()
-                              duplicateElement()
+                              e.stopPropagation();
+                              duplicateElement();
                             }}
                           >
                             <Copy className="w-4 h-4" />
@@ -267,8 +329,8 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                             size="icon"
                             variant="ghost"
                             onClick={(e) => {
-                              e.stopPropagation()
-                              deleteElement()
+                              e.stopPropagation();
+                              deleteElement();
                             }}
                           >
                             <Trash2 className="w-4 h-4" />
@@ -276,11 +338,14 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                         </div>
                       </div>
                       {elemento.tipo === "texto" && (
-                        <div className="mt-1 text-sm text-gray-500 truncate">{elemento.conteudo.texto || "Texto"}</div>
+                        <div className="mt-1 text-sm text-gray-500 truncate">
+                          {elemento.conteudo.texto || "Texto"}
+                        </div>
                       )}
                       <div className="mt-1 text-xs text-gray-400 flex justify-between">
                         <span>
-                          Posição: x:{elemento.posicaoGrid.x}, y:{elemento.posicaoGrid.y}
+                          Posição: x:{elemento.posicaoGrid.x}, y:
+                          {elemento.posicaoGrid.y}
                         </span>
                         <span>Camada: {elemento.camada || 10}</span>
                       </div>
@@ -303,10 +368,10 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
             </CardHeader>
             <CardContent>
               <div className="mb-2 text-sm text-gray-500">
-                Arraste elementos para posicioná-los visualmente no grid. O grid está visível para facilitar o
-                posicionamento.
+                Arraste elementos para posicioná-los visualmente no grid. O grid
+                está visível para facilitar o posicionamento.
               </div>
-              <div className="h-64 overflow-auto border rounded-lg">
+              <div className="h-94 overflow-auto border rounded-lg">
                 <PreviewPeca
                   formatConfig={formatConfig}
                   elementos={elementos}
@@ -338,7 +403,9 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           <Input
                             id="texto"
                             value={selectedElement.conteudo.texto || ""}
-                            onChange={(e) => updateElementContent({ texto: e.target.value })}
+                            onChange={(e) =>
+                              updateElementContent({ texto: e.target.value })
+                            }
                           />
                         </div>
 
@@ -347,16 +414,30 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           <div className="flex items-center space-x-2">
                             <Input
                               id="fontSize"
-                              value={selectedElement.conteudo.fontSize || "16px"}
-                              onChange={(e) => updateElementContent({ fontSize: e.target.value })}
+                              value={
+                                selectedElement.conteudo.fontSize || "16px"
+                              }
+                              onChange={(e) =>
+                                updateElementContent({
+                                  fontSize: e.target.value,
+                                })
+                              }
                               className="w-24"
                             />
                             <Slider
-                              defaultValue={[Number.parseInt(selectedElement.conteudo.fontSize) || 16]}
+                              defaultValue={[
+                                Number.parseInt(
+                                  selectedElement.conteudo.fontSize
+                                ) || 16,
+                              ]}
                               min={8}
                               max={72}
                               step={1}
-                              onValueChange={(value) => updateElementContent({ fontSize: `${value[0]}px` })}
+                              onValueChange={(value) =>
+                                updateElementContent({
+                                  fontSize: `${value[0]}px`,
+                                })
+                              }
                               className="flex-1"
                             />
                           </div>
@@ -368,22 +449,34 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                             <Input
                               id="textColor"
                               type="color"
-                              value={selectedElement.conteudo.color || "#000000"}
-                              onChange={(e) => updateElementContent({ color: e.target.value })}
+                              value={
+                                selectedElement.conteudo.color || "#000000"
+                              }
+                              onChange={(e) =>
+                                updateElementContent({ color: e.target.value })
+                              }
                               className="w-12 h-8 p-1"
                             />
                             <Input
-                              value={selectedElement.conteudo.color || "#000000"}
-                              onChange={(e) => updateElementContent({ color: e.target.value })}
+                              value={
+                                selectedElement.conteudo.color || "#000000"
+                              }
+                              onChange={(e) =>
+                                updateElementContent({ color: e.target.value })
+                              }
                             />
                           </div>
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="textAlign">Alinhamento do Texto</Label>
+                          <Label htmlFor="textAlign">
+                            Alinhamento do Texto
+                          </Label>
                           <Select
                             value={selectedElement.conteudo.textAlign || "left"}
-                            onValueChange={(value) => updateElementContent({ textAlign: value })}
+                            onValueChange={(value) =>
+                              updateElementContent({ textAlign: value })
+                            }
                           >
                             <SelectTrigger id="textAlign">
                               <SelectValue placeholder="Selecione o alinhamento" />
@@ -405,7 +498,9 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           <Input
                             id="imageSrc"
                             value={selectedElement.conteudo.src || ""}
-                            onChange={(e) => updateElementContent({ src: e.target.value })}
+                            onChange={(e) =>
+                              updateElementContent({ src: e.target.value })
+                            }
                             placeholder="https://exemplo.com/imagem.jpg"
                           />
                         </div>
@@ -415,7 +510,9 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           <Input
                             id="imageAlt"
                             value={selectedElement.conteudo.alt || ""}
-                            onChange={(e) => updateElementContent({ alt: e.target.value })}
+                            onChange={(e) =>
+                              updateElementContent({ alt: e.target.value })
+                            }
                             placeholder="Descrição da imagem"
                           />
                         </div>
@@ -430,11 +527,17 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                             <Input
                               id="imagemSrc"
                               value={selectedElement.conteudo.src || ""}
-                              onChange={(e) => updateElementContent({ src: e.target.value })}
+                              onChange={(e) =>
+                                updateElementContent({ src: e.target.value })
+                              }
                               placeholder="https://exemplo.com/imagem.jpg"
                               className="flex-1"
                             />
-                            <BibliotecaImagens onSelectImage={(imageUrl) => updateElementContent({ src: imageUrl })} />
+                            <BibliotecaImagens
+                              onSelectImage={(imageUrl) =>
+                                updateElementContent({ src: imageUrl })
+                              }
+                            />
                           </div>
                         </div>
 
@@ -443,7 +546,9 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           <Input
                             id="imagemAlt"
                             value={selectedElement.conteudo.alt || ""}
-                            onChange={(e) => updateElementContent({ alt: e.target.value })}
+                            onChange={(e) =>
+                              updateElementContent({ alt: e.target.value })
+                            }
                             placeholder="Descrição da imagem"
                           />
                         </div>
@@ -453,14 +558,20 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           <div className="flex items-center space-x-2">
                             <Slider
                               id="imagemOpacidade"
-                              defaultValue={[selectedElement.conteudo.opacidade || 100]}
+                              defaultValue={[
+                                selectedElement.conteudo.opacidade || 100,
+                              ]}
                               min={0}
                               max={100}
                               step={1}
-                              onValueChange={(value) => updateElementContent({ opacidade: value[0] })}
+                              onValueChange={(value) =>
+                                updateElementContent({ opacidade: value[0] })
+                              }
                               className="flex-1"
                             />
-                            <span className="w-12 text-center">{selectedElement.conteudo.opacidade || 100}%</span>
+                            <span className="w-12 text-center">
+                              {selectedElement.conteudo.opacidade || 100}%
+                            </span>
                           </div>
                         </div>
 
@@ -468,18 +579,24 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           <Label htmlFor="imagemFiltro">Filtro</Label>
                           <Select
                             value={selectedElement.conteudo.filtro || "nenhum"}
-                            onValueChange={(value) => updateElementContent({ filtro: value })}
+                            onValueChange={(value) =>
+                              updateElementContent({ filtro: value })
+                            }
                           >
                             <SelectTrigger id="imagemFiltro">
                               <SelectValue placeholder="Selecione um filtro" />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="nenhum">Nenhum</SelectItem>
-                              <SelectItem value="grayscale">Preto e Branco</SelectItem>
+                              <SelectItem value="grayscale">
+                                Preto e Branco
+                              </SelectItem>
                               <SelectItem value="sepia">Sépia</SelectItem>
                               <SelectItem value="blur">Desfoque</SelectItem>
                               <SelectItem value="brightness">Brilho</SelectItem>
-                              <SelectItem value="contrast">Contraste</SelectItem>
+                              <SelectItem value="contrast">
+                                Contraste
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -488,29 +605,50 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           <Checkbox
                             id="imagemBorda"
                             checked={selectedElement.conteudo.borda || false}
-                            onCheckedChange={(checked) => updateElementContent({ borda: checked })}
+                            onCheckedChange={(checked) =>
+                              updateElementContent({ borda: checked })
+                            }
                           />
-                          <Label htmlFor="imagemBorda" className="cursor-pointer">
+                          <Label
+                            htmlFor="imagemBorda"
+                            className="cursor-pointer"
+                          >
                             Adicionar borda
                           </Label>
                         </div>
 
                         {selectedElement.conteudo.borda && (
                           <div className="space-y-2">
-                            <Label htmlFor="imagemBordaRadius">Arredondamento da borda</Label>
+                            <Label htmlFor="imagemBordaRadius">
+                              Arredondamento da borda
+                            </Label>
                             <div className="flex items-center space-x-2">
                               <Input
                                 id="imagemBordaRadius"
-                                value={selectedElement.conteudo.bordaRadius || "0px"}
-                                onChange={(e) => updateElementContent({ bordaRadius: e.target.value })}
+                                value={
+                                  selectedElement.conteudo.bordaRadius || "0px"
+                                }
+                                onChange={(e) =>
+                                  updateElementContent({
+                                    bordaRadius: e.target.value,
+                                  })
+                                }
                                 className="w-24"
                               />
                               <Slider
-                                defaultValue={[Number.parseInt(selectedElement.conteudo.bordaRadius) || 0]}
+                                defaultValue={[
+                                  Number.parseInt(
+                                    selectedElement.conteudo.bordaRadius
+                                  ) || 0,
+                                ]}
                                 min={0}
                                 max={50}
                                 step={1}
-                                onValueChange={(value) => updateElementContent({ bordaRadius: `${value[0]}px` })}
+                                onValueChange={(value) =>
+                                  updateElementContent({
+                                    bordaRadius: `${value[0]}px`,
+                                  })
+                                }
                                 className="flex-1"
                               />
                             </div>
@@ -526,7 +664,9 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           <Input
                             id="logoSrc"
                             value={selectedElement.conteudo.src || ""}
-                            onChange={(e) => updateElementContent({ src: e.target.value })}
+                            onChange={(e) =>
+                              updateElementContent({ src: e.target.value })
+                            }
                             placeholder="https://exemplo.com/logo.png"
                           />
                         </div>
@@ -540,7 +680,9 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           <Input
                             id="ctaText"
                             value={selectedElement.conteudo.texto || ""}
-                            onChange={(e) => updateElementContent({ texto: e.target.value })}
+                            onChange={(e) =>
+                              updateElementContent({ texto: e.target.value })
+                            }
                           />
                         </div>
 
@@ -550,13 +692,27 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                             <Input
                               id="ctaColor"
                               type="color"
-                              value={selectedElement.conteudo.backgroundColor || "#0070f3"}
-                              onChange={(e) => updateElementContent({ backgroundColor: e.target.value })}
+                              value={
+                                selectedElement.conteudo.backgroundColor ||
+                                "#0070f3"
+                              }
+                              onChange={(e) =>
+                                updateElementContent({
+                                  backgroundColor: e.target.value,
+                                })
+                              }
                               className="w-12 h-8 p-1"
                             />
                             <Input
-                              value={selectedElement.conteudo.backgroundColor || "#0070f3"}
-                              onChange={(e) => updateElementContent({ backgroundColor: e.target.value })}
+                              value={
+                                selectedElement.conteudo.backgroundColor ||
+                                "#0070f3"
+                              }
+                              onChange={(e) =>
+                                updateElementContent({
+                                  backgroundColor: e.target.value,
+                                })
+                              }
                             />
                           </div>
                         </div>
@@ -566,16 +722,30 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           <div className="flex items-center space-x-2">
                             <Input
                               id="ctaFontSize"
-                              value={selectedElement.conteudo.fontSize || "16px"}
-                              onChange={(e) => updateElementContent({ fontSize: e.target.value })}
+                              value={
+                                selectedElement.conteudo.fontSize || "16px"
+                              }
+                              onChange={(e) =>
+                                updateElementContent({
+                                  fontSize: e.target.value,
+                                })
+                              }
                               className="w-24"
                             />
                             <Slider
-                              defaultValue={[Number.parseInt(selectedElement.conteudo.fontSize) || 16]}
+                              defaultValue={[
+                                Number.parseInt(
+                                  selectedElement.conteudo.fontSize
+                                ) || 16,
+                              ]}
                               min={8}
                               max={32}
                               step={1}
-                              onValueChange={(value) => updateElementContent({ fontSize: `${value[0]}px` })}
+                              onValueChange={(value) =>
+                                updateElementContent({
+                                  fontSize: `${value[0]}px`,
+                                })
+                              }
                               className="flex-1"
                             />
                           </div>
@@ -595,7 +765,10 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               variant="outline"
                               onClick={() =>
                                 updateElementPosition({
-                                  x: Math.max(0, selectedElement.posicaoGrid.x - 1),
+                                  x: Math.max(
+                                    0,
+                                    selectedElement.posicaoGrid.x - 1
+                                  ),
                                 })
                               }
                               disabled={selectedElement.posicaoGrid.x <= 0}
@@ -606,9 +779,16 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               id="gridX"
                               type="number"
                               min={0}
-                              max={formatConfig.grid.columns - selectedElement.posicaoGrid.width}
+                              max={
+                                formatConfig.grid.columns -
+                                selectedElement.posicaoGrid.width
+                              }
                               value={selectedElement.posicaoGrid.x}
-                              onChange={(e) => updateElementPosition({ x: Number.parseInt(e.target.value) || 0 })}
+                              onChange={(e) =>
+                                updateElementPosition({
+                                  x: Number.parseInt(e.target.value) || 0,
+                                })
+                              }
                             />
                             <Button
                               size="icon"
@@ -616,14 +796,16 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               onClick={() =>
                                 updateElementPosition({
                                   x: Math.min(
-                                    formatConfig.grid.columns - selectedElement.posicaoGrid.width,
-                                    selectedElement.posicaoGrid.x + 1,
+                                    formatConfig.grid.columns -
+                                      selectedElement.posicaoGrid.width,
+                                    selectedElement.posicaoGrid.x + 1
                                   ),
                                 })
                               }
                               disabled={
                                 selectedElement.posicaoGrid.x >=
-                                formatConfig.grid.columns - selectedElement.posicaoGrid.width
+                                formatConfig.grid.columns -
+                                  selectedElement.posicaoGrid.width
                               }
                             >
                               <MoveHorizontal className="w-4 h-4" />
@@ -639,7 +821,10 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               variant="outline"
                               onClick={() =>
                                 updateElementPosition({
-                                  y: Math.max(0, selectedElement.posicaoGrid.y - 1),
+                                  y: Math.max(
+                                    0,
+                                    selectedElement.posicaoGrid.y - 1
+                                  ),
                                 })
                               }
                               disabled={selectedElement.posicaoGrid.y <= 0}
@@ -650,9 +835,16 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               id="gridY"
                               type="number"
                               min={0}
-                              max={formatConfig.grid.rows - selectedElement.posicaoGrid.height}
+                              max={
+                                formatConfig.grid.rows -
+                                selectedElement.posicaoGrid.height
+                              }
                               value={selectedElement.posicaoGrid.y}
-                              onChange={(e) => updateElementPosition({ y: Number.parseInt(e.target.value) || 0 })}
+                              onChange={(e) =>
+                                updateElementPosition({
+                                  y: Number.parseInt(e.target.value) || 0,
+                                })
+                              }
                             />
                             <Button
                               size="icon"
@@ -660,14 +852,16 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               onClick={() =>
                                 updateElementPosition({
                                   y: Math.min(
-                                    formatConfig.grid.rows - selectedElement.posicaoGrid.height,
-                                    selectedElement.posicaoGrid.y + 1,
+                                    formatConfig.grid.rows -
+                                      selectedElement.posicaoGrid.height,
+                                    selectedElement.posicaoGrid.y + 1
                                   ),
                                 })
                               }
                               disabled={
                                 selectedElement.posicaoGrid.y >=
-                                formatConfig.grid.rows - selectedElement.posicaoGrid.height
+                                formatConfig.grid.rows -
+                                  selectedElement.posicaoGrid.height
                               }
                             >
                               <MoveVertical className="w-4 h-4" />
@@ -685,7 +879,10 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               variant="outline"
                               onClick={() =>
                                 updateElementPosition({
-                                  width: Math.max(1, selectedElement.posicaoGrid.width - 1),
+                                  width: Math.max(
+                                    1,
+                                    selectedElement.posicaoGrid.width - 1
+                                  ),
                                 })
                               }
                               disabled={selectedElement.posicaoGrid.width <= 1}
@@ -696,9 +893,16 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               id="gridWidth"
                               type="number"
                               min={1}
-                              max={formatConfig.grid.columns - selectedElement.posicaoGrid.x}
+                              max={
+                                formatConfig.grid.columns -
+                                selectedElement.posicaoGrid.x
+                              }
                               value={selectedElement.posicaoGrid.width}
-                              onChange={(e) => updateElementPosition({ width: Number.parseInt(e.target.value) || 1 })}
+                              onChange={(e) =>
+                                updateElementPosition({
+                                  width: Number.parseInt(e.target.value) || 1,
+                                })
+                              }
                             />
                             <Button
                               size="icon"
@@ -706,14 +910,16 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               onClick={() =>
                                 updateElementPosition({
                                   width: Math.min(
-                                    formatConfig.grid.columns - selectedElement.posicaoGrid.x,
-                                    selectedElement.posicaoGrid.width + 1,
+                                    formatConfig.grid.columns -
+                                      selectedElement.posicaoGrid.x,
+                                    selectedElement.posicaoGrid.width + 1
                                   ),
                                 })
                               }
                               disabled={
                                 selectedElement.posicaoGrid.width >=
-                                formatConfig.grid.columns - selectedElement.posicaoGrid.x
+                                formatConfig.grid.columns -
+                                  selectedElement.posicaoGrid.x
                               }
                             >
                               <MoveHorizontal className="w-4 h-4" />
@@ -729,7 +935,10 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               variant="outline"
                               onClick={() =>
                                 updateElementPosition({
-                                  height: Math.max(1, selectedElement.posicaoGrid.height - 1),
+                                  height: Math.max(
+                                    1,
+                                    selectedElement.posicaoGrid.height - 1
+                                  ),
                                 })
                               }
                               disabled={selectedElement.posicaoGrid.height <= 1}
@@ -740,9 +949,16 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               id="gridHeight"
                               type="number"
                               min={1}
-                              max={formatConfig.grid.rows - selectedElement.posicaoGrid.y}
+                              max={
+                                formatConfig.grid.rows -
+                                selectedElement.posicaoGrid.y
+                              }
                               value={selectedElement.posicaoGrid.height}
-                              onChange={(e) => updateElementPosition({ height: Number.parseInt(e.target.value) || 1 })}
+                              onChange={(e) =>
+                                updateElementPosition({
+                                  height: Number.parseInt(e.target.value) || 1,
+                                })
+                              }
                             />
                             <Button
                               size="icon"
@@ -750,14 +966,16 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                               onClick={() =>
                                 updateElementPosition({
                                   height: Math.min(
-                                    formatConfig.grid.rows - selectedElement.posicaoGrid.y,
-                                    selectedElement.posicaoGrid.height + 1,
+                                    formatConfig.grid.rows -
+                                      selectedElement.posicaoGrid.y,
+                                    selectedElement.posicaoGrid.height + 1
                                   ),
                                 })
                               }
                               disabled={
                                 selectedElement.posicaoGrid.height >=
-                                formatConfig.grid.rows - selectedElement.posicaoGrid.y
+                                formatConfig.grid.rows -
+                                  selectedElement.posicaoGrid.y
                               }
                             >
                               <MoveVertical className="w-4 h-4" />
@@ -773,7 +991,10 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                             variant="outline"
                             onClick={() =>
                               updateElement({
-                                camada: Math.max(1, (selectedElement.camada || 10) - 1),
+                                camada: Math.max(
+                                  1,
+                                  (selectedElement.camada || 10) - 1
+                                ),
                               })
                             }
                             title="Enviar para trás"
@@ -802,14 +1023,21 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                             min={1}
                             max={100}
                             value={selectedElement.camada || 10}
-                            onChange={(e) => updateElement({ camada: Number.parseInt(e.target.value) || 10 })}
+                            onChange={(e) =>
+                              updateElement({
+                                camada: Number.parseInt(e.target.value) || 10,
+                              })
+                            }
                           />
                           <Button
                             size="icon"
                             variant="outline"
                             onClick={() =>
                               updateElement({
-                                camada: Math.min(100, (selectedElement.camada || 10) + 1),
+                                camada: Math.min(
+                                  100,
+                                  (selectedElement.camada || 10) + 1
+                                ),
                               })
                             }
                             title="Trazer para frente"
@@ -833,7 +1061,8 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
                           </Button>
                         </div>
                         <div className="text-xs text-gray-500 mt-1">
-                          Valores maiores trazem o elemento para frente, valores menores enviam para trás.
+                          Valores maiores trazem o elemento para frente, valores
+                          menores enviam para trás.
                         </div>
                       </div>
                     </div>
@@ -844,9 +1073,12 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
           ) : (
             <div className="flex items-center justify-center h-full p-8 text-center border rounded-lg">
               <div className="max-w-md space-y-2">
-                <h3 className="text-lg font-medium">Nenhum Elemento Selecionado</h3>
+                <h3 className="text-lg font-medium">
+                  Nenhum Elemento Selecionado
+                </h3>
                 <p className="text-sm text-gray-500">
-                  Selecione um elemento da lista à esquerda para editar suas propriedades, ou adicione um novo elemento.
+                  Selecione um elemento da lista à esquerda para editar suas
+                  propriedades, ou adicione um novo elemento.
                 </p>
               </div>
             </div>
@@ -854,5 +1086,5 @@ export function EditorElementos({ formatConfig, elementos, setElementos }: Edito
         </div>
       </div>
     </div>
-  )
+  );
 }

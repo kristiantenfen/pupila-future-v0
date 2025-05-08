@@ -1,49 +1,60 @@
-"use client"
+"use client";
 
-import type React from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { PlusCircle, History, Trash2 } from "lucide-react"
-import { useCampanhasStore } from "@/lib/campanhas-store"
-import { useToast } from "@/components/ui/use-toast"
-import { format } from "date-fns"
-import { ptBR } from "date-fns/locale"
+import type React from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { PlusCircle, History, Trash2 } from "lucide-react";
+import { useCampanhasStore } from "@/lib/campanhas-store";
+import { useToast } from "@/components/ui/use-toast";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 export default function CampanhasPage() {
-  const { campanhas, removerCampanha } = useCampanhasStore()
-  const { toast } = useToast()
+  const { campanhas, removerCampanha } = useCampanhasStore();
+  const { toast } = useToast();
 
   // Formata a data para exibição
   const formatarData = (dataString: string) => {
     try {
-      return format(new Date(dataString), "dd/MM/yyyy", { locale: ptBR })
+      return format(new Date(dataString), "dd/MM/yyyy", { locale: ptBR });
     } catch (error) {
-      return "Data inválida"
+      return "Data inválida";
     }
-  }
+  };
 
   // Calcula a versão com base na quantidade de assets
   const calcularVersao = (campanha: any) => {
-    const numAssets = campanha.assets?.length || 0
-    const versaoBase = 1
-    const versaoDecimal = numAssets > 0 ? numAssets : 0
-    return `${versaoBase}.${versaoDecimal}`
-  }
+    const numAssets = campanha.assets?.length || 0;
+    const versaoBase = 1;
+    const versaoDecimal = numAssets > 0 ? numAssets : 0;
+    return `${versaoBase}.${versaoDecimal}`;
+  };
 
-  const handleRemoverCampanha = (id: string, nome: string, e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
+  const handleRemoverCampanha = (
+    id: string,
+    nome: string,
+    e: React.MouseEvent
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
 
     if (confirm(`Tem certeza que deseja remover a campanha "${nome}"?`)) {
-      removerCampanha(id)
+      removerCampanha(id);
       toast({
         title: "Campanha removida",
         description: `A campanha "${nome}" foi removida com sucesso.`,
-      })
+      });
     }
-  }
+  };
 
   return (
     <div className="container px-4 py-8 mx-auto md:px-6">
@@ -59,8 +70,12 @@ export default function CampanhasPage() {
 
       {campanhas.length === 0 ? (
         <div className="text-center py-12 border rounded-lg bg-gray-50">
-          <h2 className="text-xl font-medium mb-2">Nenhuma campanha encontrada</h2>
-          <p className="text-gray-500 mb-6">Comece criando sua primeira campanha de marketing.</p>
+          <h2 className="text-xl font-medium mb-2">
+            Nenhuma campanha encontrada
+          </h2>
+          <p className="text-gray-500 mb-6">
+            Comece criando sua primeira campanha de marketing.
+          </p>
           <Link href="/campanhas/nova">
             <Button>
               <PlusCircle className="w-4 h-4 mr-2" />
@@ -86,7 +101,10 @@ export default function CampanhasPage() {
                   <p className="text-sm text-gray-500">Plataformas:</p>
                   <div className="flex flex-wrap gap-2 mt-1">
                     {campanha.plataformas.map((plataforma) => (
-                      <span key={plataforma} className="px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-800">
+                      <span
+                        key={plataforma}
+                        className="px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-800"
+                      >
                         {plataforma}
                       </span>
                     ))}
@@ -102,19 +120,18 @@ export default function CampanhasPage() {
                   variant="ghost"
                   size="sm"
                   className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                  onClick={(e) => handleRemoverCampanha(campanha.id, campanha.nome, e)}
+                  onClick={(e) =>
+                    handleRemoverCampanha(campanha.id, campanha.nome, e)
+                  }
                 >
                   <Trash2 className="w-4 h-4 mr-1" />
                   Remover
                 </Button>
                 <div className="flex space-x-2">
-                  <Link href={`/campanhas/${campanha.id}`}>
+                  <Link href={`/campanhas/${campanha.id}/editor`}>
                     <Button variant="outline" size="sm">
                       Ver Detalhes
                     </Button>
-                  </Link>
-                  <Link href={`/campanhas/${campanha.id}/editor`}>
-                    <Button size="sm">Editar Peças</Button>
                   </Link>
                 </div>
               </CardFooter>
@@ -123,5 +140,5 @@ export default function CampanhasPage() {
         </div>
       )}
     </div>
-  )
+  );
 }

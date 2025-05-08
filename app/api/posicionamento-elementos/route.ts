@@ -1,14 +1,22 @@
-import { NextResponse } from "next/server"
-import { generateText } from "ai"
-import { openai } from "@ai-sdk/openai"
+import { NextResponse } from "next/server";
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
 
 export async function POST(request: Request) {
   try {
-    const { elementos, formatoOrigem, formatosDestino } = await request.json()
+    const { elementos, formatoOrigem, formatosDestino } = await request.json();
 
     // Validação básica
-    if (!elementos || !formatoOrigem || !formatosDestino || !Array.isArray(formatosDestino)) {
-      return NextResponse.json({ error: "Dados inválidos. Verifique os parâmetros enviados." }, { status: 400 })
+    if (
+      !elementos ||
+      !formatoOrigem ||
+      !formatosDestino ||
+      !Array.isArray(formatosDestino)
+    ) {
+      return NextResponse.json(
+        { error: "Dados inválidos. Verifique os parâmetros enviados." },
+        { status: 400 }
+      );
     }
 
     // Construir o prompt para a OpenAI
@@ -54,7 +62,7 @@ export async function POST(request: Request) {
           }
         ]
       }
-    `
+    `;
 
     // Chamar a OpenAI
     const { text } = await generateText({
@@ -62,32 +70,38 @@ export async function POST(request: Request) {
       prompt: prompt,
       temperature: 0.7,
       maxTokens: 4000,
-    })
+    });
+
+    console.log("Resposta da OpenAI:", text);
 
     // Processar a resposta
-    let sugestoes
+    let sugestoes;
     try {
       // Extrair apenas o JSON da resposta
-      const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) || text.match(/\{[\s\S]*\}/)
+      const jsonMatch =
+        text.match(/```json\s*([\s\S]*?)\s*```/) || text.match(/\{[\s\S]*\}/);
 
-      const jsonText = jsonMatch ? jsonMatch[1] || jsonMatch[0] : text
-      sugestoes = JSON.parse(jsonText)
+      const jsonText = jsonMatch ? jsonMatch[1] || jsonMatch[0] : text;
+      sugestoes = JSON.parse(jsonText);
     } catch (error) {
-      console.error("Erro ao processar resposta da OpenAI:", error)
-      console.log("Resposta original:", text)
+      console.error("Erro ao processar resposta da OpenAI:", error);
+      console.log("Resposta original:", text);
 
       return NextResponse.json(
         {
           error: "Erro ao processar resposta da IA",
           rawResponse: text,
         },
-        { status: 500 },
-      )
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json(sugestoes)
+    return NextResponse.json(sugestoes);
   } catch (error) {
-    console.error("Erro no processamento:", error)
-    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+    console.error("Erro no processamento:", error);
+    return NextResponse.json(
+      { error: "Erro interno do servidor" },
+      { status: 500 }
+    );
   }
 }

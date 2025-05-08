@@ -1,59 +1,69 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Grid, Eye, EyeOff, Move } from "lucide-react"
-import { RenderizadorElemento } from "@/components/renderizador-elemento"
+import { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Grid, Eye, EyeOff, Move } from "lucide-react";
+import { RenderizadorElemento } from "@/components/renderizador-elemento";
 
 interface PreviewPecaProps {
-  formatConfig: any
-  elementos: any[]
-  onElementosChange?: (elementos: any[]) => void
-  editMode?: boolean
+  formatConfig: any;
+  elementos: any[];
+  onElementosChange?: (elementos: any[]) => void;
+  editMode?: boolean;
 }
 
-export function PreviewPeca({ formatConfig, elementos, onElementosChange, editMode = false }: PreviewPecaProps) {
-  const [showGrid, setShowGrid] = useState(true) // Grid visível por padrão
-  const [selectedElementId, setSelectedElementId] = useState<string | null>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
+export function PreviewPeca({
+  formatConfig,
+  elementos,
+  onElementosChange,
+  editMode = false,
+}: PreviewPecaProps) {
+  const [showGrid, setShowGrid] = useState(true); // Grid visível por padrão
+  const [selectedElementId, setSelectedElementId] = useState<string | null>(
+    null
+  );
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
 
-  const { width, height, grid } = formatConfig
-  const aspectRatio = width / height
-  const isVertical = height > width
-  const isWideFormat = aspectRatio > 2 // Para formatos muito largos como banners
+  const { width, height, grid } = formatConfig;
+  const aspectRatio = width / height;
+  const isVertical = height > width;
+  const isWideFormat = aspectRatio > 2; // Para formatos muito largos como banners
 
   // Calcula dimensões das células do grid
-  const cellWidth = 100 / grid.columns
-  const cellHeight = 100 / grid.rows
+  const cellWidth = 100 / grid.columns;
+  const cellHeight = 100 / grid.rows;
 
   // Atualiza o tamanho do container quando ele é montado ou redimensionado
   useEffect(() => {
-    if (!containerRef.current) return
+    if (!containerRef.current) return;
 
     const updateSize = () => {
       if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect()
-        setContainerSize({ width: rect.width, height: rect.height })
+        const rect = containerRef.current.getBoundingClientRect();
+        setContainerSize({ width: rect.width, height: rect.height });
       }
-    }
+    };
 
     // Atualiza o tamanho inicial
-    updateSize()
+    updateSize();
 
     // Adiciona um listener para redimensionamento
-    const resizeObserver = new ResizeObserver(updateSize)
-    resizeObserver.observe(containerRef.current)
+    const resizeObserver = new ResizeObserver(updateSize);
+    resizeObserver.observe(containerRef.current);
 
     return () => {
       if (containerRef.current) {
-        resizeObserver.unobserve(containerRef.current)
+        resizeObserver.unobserve(containerRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
-  const handlePositionChange = (id: string, newPosition: { x: number; y: number }) => {
-    if (!onElementosChange) return
+  const handlePositionChange = (
+    id: string,
+    newPosition: { x: number; y: number }
+  ) => {
+    if (!onElementosChange) return;
 
     const newElementos = elementos.map((el) => {
       if (el.id === id) {
@@ -61,33 +71,39 @@ export function PreviewPeca({ formatConfig, elementos, onElementosChange, editMo
           ...el,
           posicaoGrid: {
             ...el.posicaoGrid,
-            x: Math.max(0, Math.min(newPosition.x, grid.columns - el.posicaoGrid.width)),
-            y: Math.max(0, Math.min(newPosition.y, grid.rows - el.posicaoGrid.height)),
+            x: Math.max(
+              0,
+              Math.min(newPosition.x, grid.columns - el.posicaoGrid.width)
+            ),
+            y: Math.max(
+              0,
+              Math.min(newPosition.y, grid.rows - el.posicaoGrid.height)
+            ),
           },
-        }
+        };
       }
-      return el
-    })
+      return el;
+    });
 
-    onElementosChange(newElementos)
-  }
+    onElementosChange(newElementos);
+  };
 
   const handleElementClick = (elementId: string) => {
     if (editMode) {
-      setSelectedElementId(elementId)
+      setSelectedElementId(elementId);
     }
-  }
+  };
 
   // Ordena os elementos por z-index (camada) antes de renderizar
   const elementosOrdenados = [...elementos].sort((a, b) => {
-    const camadaA = a.camada || 10
-    const camadaB = b.camada || 10
-    return camadaA - camadaB
-  })
+    const camadaA = a.camada || 10;
+    const camadaB = b.camada || 10;
+    return camadaA - camadaB;
+  });
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between h-full p-4">
         <h3 className="text-lg font-medium">Preview</h3>
         <div className="flex space-x-2">
           {editMode && (
@@ -96,8 +112,16 @@ export function PreviewPeca({ formatConfig, elementos, onElementosChange, editMo
               <span>Arraste os elementos para posicioná-los</span>
             </div>
           )}
-          <Button variant="outline" size="sm" onClick={() => setShowGrid(!showGrid)}>
-            {showGrid ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowGrid(!showGrid)}
+          >
+            {showGrid ? (
+              <EyeOff className="w-4 h-4 mr-2" />
+            ) : (
+              <Eye className="w-4 h-4 mr-2" />
+            )}
             {showGrid ? "Ocultar Grid" : "Mostrar Grid"}
           </Button>
         </div>
@@ -105,10 +129,10 @@ export function PreviewPeca({ formatConfig, elementos, onElementosChange, editMo
 
       <div
         ref={containerRef}
-        className="relative w-full overflow-hidden bg-white border rounded-md shadow-sm"
+        className="relative  w-full h-full overflow-hidden bg-white border rounded-md shadow-sm"
         style={{
           aspectRatio: `${width} / ${height}`,
-          maxHeight: isVertical ? "70vh" : isWideFormat ? "200px" : "60vh",
+          //maxHeight: isVertical ? "70vh" : isWideFormat ? "200px" : "60vh",
           width: "100%",
           margin: "0 auto",
         }}
@@ -163,5 +187,5 @@ export function PreviewPeca({ formatConfig, elementos, onElementosChange, editMo
         {formatConfig.nome}: {width} × {height} pixels
       </div>
     </div>
-  )
+  );
 }

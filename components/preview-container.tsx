@@ -1,52 +1,56 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useRef, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Maximize2, Minimize2 } from "lucide-react"
+import { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Maximize2, Minimize2 } from "lucide-react";
 
 interface PreviewContainerProps {
-  formatConfig: any
-  children: React.ReactNode
-  className?: string
+  formatConfig: any;
+  children: React.ReactNode;
+  className?: string;
 }
 
-export function PreviewContainer({ formatConfig, children, className = "" }: PreviewContainerProps) {
-  const [fullWidth, setFullWidth] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
+export function PreviewContainer({
+  formatConfig,
+  children,
+  className = "",
+}: PreviewContainerProps) {
+  const [fullWidth, setFullWidth] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
 
-  const { width, height, nome } = formatConfig
-  const aspectRatio = width / height
-  const isVertical = height > width
-  const isSquare = width === height
-  const isWideFormat = aspectRatio > 2 // Para formatos muito largos como banners
+  const { width, height, nome } = formatConfig;
+  const aspectRatio = width / height;
+  const isVertical = height > width;
+  const isSquare = width === height;
+  const isWideFormat = aspectRatio > 2; // Para formatos muito largos como banners
 
   // Atualiza o tamanho do container quando ele é montado ou redimensionado
   useEffect(() => {
-    if (!containerRef.current) return
+    if (!containerRef.current) return;
 
     const updateSize = () => {
       if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect()
-        setContainerSize({ width: rect.width, height: rect.height })
+        const rect = containerRef.current.getBoundingClientRect();
+        setContainerSize({ width: rect.width, height: rect.height });
       }
-    }
+    };
 
     // Atualiza o tamanho inicial
-    updateSize()
+    updateSize();
 
     // Adiciona um listener para redimensionamento
-    const resizeObserver = new ResizeObserver(updateSize)
-    resizeObserver.observe(containerRef.current)
+    const resizeObserver = new ResizeObserver(updateSize);
+    resizeObserver.observe(containerRef.current);
 
     return () => {
       if (containerRef.current) {
-        resizeObserver.unobserve(containerRef.current)
+        resizeObserver.unobserve(containerRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   // Calcula o estilo do container com base na orientação e proporção
   const getContainerStyle = () => {
@@ -54,8 +58,8 @@ export function PreviewContainer({ formatConfig, children, className = "" }: Pre
       return {
         width: "100%",
         aspectRatio: `${width} / ${height}`,
-        maxHeight: "80vh", // Limita a altura máxima para visualização
-      }
+        maxHeight: "100vh", // Limita a altura máxima para visualização
+      };
     }
 
     // Para formatos verticais (como Stories)
@@ -64,17 +68,17 @@ export function PreviewContainer({ formatConfig, children, className = "" }: Pre
         height: "70vh",
         width: `calc(70vh * ${aspectRatio})`,
         maxWidth: "100%",
-      }
+      };
     }
 
     // Para formatos quadrados
     if (isSquare) {
-      const size = Math.min(500, window.innerWidth * 0.8)
+      const size = Math.min(500, window.innerWidth * 0.8);
       return {
         width: `${size}px`,
         height: `${size}px`,
         maxWidth: "100%",
-      }
+      };
     }
 
     // Para formatos muito largos (banners)
@@ -83,7 +87,7 @@ export function PreviewContainer({ formatConfig, children, className = "" }: Pre
         width: "100%",
         height: `calc(100% / ${aspectRatio})`,
         maxHeight: "200px",
-      }
+      };
     }
 
     // Para formatos horizontais padrão
@@ -91,8 +95,8 @@ export function PreviewContainer({ formatConfig, children, className = "" }: Pre
       width: "100%",
       aspectRatio: `${width} / ${height}`,
       maxHeight: "60vh",
-    }
-  }
+    };
+  };
 
   return (
     <div className="relative">
@@ -110,7 +114,7 @@ export function PreviewContainer({ formatConfig, children, className = "" }: Pre
       <div
         ref={containerRef}
         className={`relative mx-auto border rounded-md shadow-sm overflow-hidden bg-white ${className}`}
-        style={getContainerStyle()}
+        // style={getContainerStyle()}
       >
         {children}
       </div>
@@ -121,5 +125,5 @@ export function PreviewContainer({ formatConfig, children, className = "" }: Pre
         </span>
       </div>
     </div>
-  )
+  );
 }
