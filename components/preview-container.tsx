@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Maximize2, Minimize2 } from "lucide-react"
 
@@ -15,15 +15,38 @@ interface PreviewContainerProps {
 export function PreviewContainer({ formatConfig, children, className = "" }: PreviewContainerProps) {
   const [fullWidth, setFullWidth] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
 
-  const { width, height } = formatConfig
+  const { width, height, nome } = formatConfig
   const aspectRatio = width / height
   const isVertical = height > width
+  const isSquare = width === height
+  const isWideFormat = aspectRatio > 2 // Para formatos muito largos como banners
 
-  // Adicione este log logo após a desestruturação das props
-  console.log(
-    `PreviewContainer - Formato: ${formatConfig.nome}, Dimensões: ${width}x${height}, Proporção: ${aspectRatio}`,
-  )
+  // Atualiza o tamanho do container quando ele é montado ou redimensionado
+  useEffect(() => {
+    if (!containerRef.current) return
+
+    const updateSize = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect()
+        setContainerSize({ width: rect.width, height: rect.height })
+      }
+    }
+
+    // Atualiza o tamanho inicial
+    updateSize()
+
+    // Adiciona um listener para redimensionamento
+    const resizeObserver = new ResizeObserver(updateSize)
+    resizeObserver.observe(containerRef.current)
+
+    return () => {
+      if (containerRef.current) {
+        resizeObserver.unobserve(containerRef.current)
+      }
+    }
+  }, [])
 
   // Calcula o estilo do container com base na orientação e proporção
   const getContainerStyle = () => {
@@ -31,10 +54,11 @@ export function PreviewContainer({ formatConfig, children, className = "" }: Pre
       return {
         width: "100%",
         aspectRatio: `${width} / ${height}`,
+        maxHeight: "80vh", // Limita a altura máxima para visualização
       }
     }
 
-    // Para formatos verticais (como Stories), limitamos a altura e calculamos a largura
+    // Para formatos verticais (como Stories)
     if (isVertical) {
       return {
         height: "70vh",
@@ -43,11 +67,30 @@ export function PreviewContainer({ formatConfig, children, className = "" }: Pre
       }
     }
 
-    // Para formatos horizontais, usamos largura máxima e calculamos a altura
+    // Para formatos quadrados
+    if (isSquare) {
+      const size = Math.min(500, window.innerWidth * 0.8)
+      return {
+        width: `${size}px`,
+        height: `${size}px`,
+        maxWidth: "100%",
+      }
+    }
+
+    // Para formatos muito largos (banners)
+    if (isWideFormat) {
+      return {
+        width: "100%",
+        height: `calc(100% / ${aspectRatio})`,
+        maxHeight: "200px",
+      }
+    }
+
+    // Para formatos horizontais padrão
     return {
       width: "100%",
       aspectRatio: `${width} / ${height}`,
-      maxHeight: "70vh",
+      maxHeight: "60vh",
     }
   }
 
@@ -70,6 +113,12 @@ export function PreviewContainer({ formatConfig, children, className = "" }: Pre
         style={getContainerStyle()}
       >
         {children}
+      </div>
+
+      <div className="mt-2 text-xs text-center text-gray-500">
+        <span>
+          {nome} • {width}×{height}px • Proporção: {aspectRatio.toFixed(2)}:1
+        </span>
       </div>
     </div>
   )

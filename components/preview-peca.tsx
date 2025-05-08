@@ -19,8 +19,9 @@ export function PreviewPeca({ formatConfig, elementos, onElementosChange, editMo
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
 
   const { width, height, grid } = formatConfig
-  console.log(`Preview - Formato: ${formatConfig.nome}, Dimensões: ${width}x${height}, Proporção: ${width / height}`)
   const aspectRatio = width / height
+  const isVertical = height > width
+  const isWideFormat = aspectRatio > 2 // Para formatos muito largos como banners
 
   // Calcula dimensões das células do grid
   const cellWidth = 100 / grid.columns
@@ -102,75 +103,64 @@ export function PreviewPeca({ formatConfig, elementos, onElementosChange, editMo
         </div>
       </div>
 
-      <div className="relative mx-auto border rounded-md shadow-sm" style={{ maxWidth: "100%" }}>
-        {/* Canvas com proporção de aspecto correta */}
-        <div
-          ref={containerRef}
-          className="relative w-full overflow-hidden bg-white"
-          style={{
-            aspectRatio: `${width} / ${height}`,
-            maxHeight: "70vh", // Limita a altura máxima para visualização
-            width: "100%",
-            margin: "0 auto",
-          }}
-        >
-          {/* Renderiza elementos */}
-          {elementosOrdenados.map((elemento) => (
-            <RenderizadorElemento
-              key={elemento.id}
-              elemento={elemento}
-              gridConfig={grid}
-              isEditing={editMode}
-              onClick={() => handleElementClick(elemento.id)}
-              onPositionChange={handlePositionChange}
-              container={containerRef.current}
-            />
-          ))}
+      <div
+        ref={containerRef}
+        className="relative w-full overflow-hidden bg-white border rounded-md shadow-sm"
+        style={{
+          aspectRatio: `${width} / ${height}`,
+          maxHeight: isVertical ? "70vh" : isWideFormat ? "200px" : "60vh",
+          width: "100%",
+          margin: "0 auto",
+        }}
+      >
+        {/* Renderiza elementos */}
+        {elementosOrdenados.map((elemento) => (
+          <RenderizadorElemento
+            key={elemento.id}
+            elemento={elemento}
+            gridConfig={grid}
+            isEditing={editMode}
+            onClick={() => handleElementClick(elemento.id)}
+            onPositionChange={handlePositionChange}
+            container={containerRef.current}
+          />
+        ))}
 
-          {/* Sobreposição do grid - agora renderizado por cima dos elementos */}
-          {showGrid && (
-            <div className="absolute inset-0 pointer-events-none z-20">
-              {/* Linhas verticais do grid */}
-              {Array.from({ length: grid.columns + 1 }).map((_, i) => (
-                <div
-                  key={`v-${i}`}
-                  className="absolute top-0 bottom-0 border-l border-blue-300"
-                  style={{
-                    left: `${(i / grid.columns) * 100}%`,
-                    opacity: i % 2 === 0 ? 0.4 : 0.2, // Linhas principais mais visíveis
-                    borderStyle: i % 2 === 0 ? "solid" : "dashed",
-                  }}
-                />
-              ))}
+        {/* Sobreposição do grid - agora renderizado por cima dos elementos */}
+        {showGrid && (
+          <div className="absolute inset-0 pointer-events-none z-20">
+            {/* Linhas verticais do grid */}
+            {Array.from({ length: grid.columns + 1 }).map((_, i) => (
+              <div
+                key={`v-${i}`}
+                className="absolute top-0 bottom-0 border-l border-blue-300"
+                style={{
+                  left: `${(i / grid.columns) * 100}%`,
+                  opacity: i % 2 === 0 ? 0.4 : 0.2, // Linhas principais mais visíveis
+                  borderStyle: i % 2 === 0 ? "solid" : "dashed",
+                }}
+              />
+            ))}
 
-              {/* Linhas horizontais do grid */}
-              {Array.from({ length: grid.rows + 1 }).map((_, i) => (
-                <div
-                  key={`h-${i}`}
-                  className="absolute left-0 right-0 border-t border-blue-300"
-                  style={{
-                    top: `${(i / grid.rows) * 100}%`,
-                    opacity: i % 2 === 0 ? 0.4 : 0.2, // Linhas principais mais visíveis
-                    borderStyle: i % 2 === 0 ? "solid" : "dashed",
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+            {/* Linhas horizontais do grid */}
+            {Array.from({ length: grid.rows + 1 }).map((_, i) => (
+              <div
+                key={`h-${i}`}
+                className="absolute left-0 right-0 border-t border-blue-300"
+                style={{
+                  top: `${(i / grid.rows) * 100}%`,
+                  opacity: i % 2 === 0 ? 0.4 : 0.2, // Linhas principais mais visíveis
+                  borderStyle: i % 2 === 0 ? "solid" : "dashed",
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="p-3 text-sm text-center text-gray-500 border rounded-md bg-gray-50">
         <Grid className="inline-block w-4 h-4 mr-1" />
         {formatConfig.nome}: {width} × {height} pixels
-      </div>
-
-      <div className="mt-2 text-xs text-center text-gray-400">
-        <span>Proporção: {(width / height).toFixed(2)}:1</span>
-        <span className="mx-2">•</span>
-        <span>
-          Grid: {grid.columns} × {grid.rows}
-        </span>
       </div>
     </div>
   )

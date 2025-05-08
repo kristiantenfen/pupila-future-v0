@@ -267,26 +267,48 @@ export default function EditorCampanhaPage() {
   }
 
   const aplicarElementosAoFormato = (elementosNovos: any[], formato: string) => {
-    // Verificar se o formato é válido
+    console.log("Aplicando elementos ao formato:", formato, elementosNovos)
+
+    // Verificar se o formato é válido - usando nome em vez de objeto completo
     if (!formato || !availableFormats.some((f) => f.nome === formato)) {
       toast({
         title: "Formato inválido",
-        description: "O formato selecionado não está disponível para esta plataforma.",
+        description: `O formato ${formato} não está disponível para esta plataforma.`,
         variant: "destructive",
       })
       return
     }
 
-    // Mudar para o formato selecionado
+    // Primeiro, mudar para o formato selecionado
     setSelectedFormat(formato)
 
-    // Aplicar os elementos
-    setElementos(elementosNovos)
+    // Aguardar a mudança de formato ser processada
+    setTimeout(() => {
+      // Adaptar os elementos para o formato atual
+      const config = getConfigFormato(selectedPlatform, formato)
+      if (config) {
+        const elementosAdaptados = adaptarElementosParaFormato(elementosNovos, config)
 
-    toast({
-      title: "Elementos aplicados",
-      description: `Os elementos foram aplicados ao formato ${formato}.`,
-    })
+        // Aplicar os elementos adaptados
+        setElementos(elementosAdaptados)
+
+        // Salvar automaticamente se auto-save estiver ativado
+        if (autoSave && campanhaId) {
+          adicionarAsset(campanhaId, {
+            plataforma: selectedPlatform,
+            formato: formato,
+            elementos: elementosAdaptados,
+          })
+
+          setLastSaved(new Date().toLocaleTimeString())
+        }
+
+        toast({
+          title: "Elementos aplicados",
+          description: `${elementosAdaptados.length} elementos foram aplicados ao formato ${formato}.`,
+        })
+      }
+    }, 100) // Pequeno delay para garantir que o formato foi alterado
   }
 
   return (

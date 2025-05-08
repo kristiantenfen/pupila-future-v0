@@ -14,11 +14,65 @@ export function FormatoPreview({ formatConfig }: FormatoPreviewProps) {
   const { width, height, nome } = formatConfig
   const aspectRatio = width / height
   const isVertical = height > width
+  const isSquare = Math.abs(aspectRatio - 1) < 0.1
+  const isWideFormat = aspectRatio > 2
 
-  // Determina a classe de tamanho com base na orientação
-  const sizeClass = isVertical
-    ? "h-40 w-[calc(40px*" + width / height + ")]"
-    : "w-40 h-[calc(40px/" + width / height + ")]"
+  // Determina o tamanho e a classe com base na orientação
+  const getPreviewStyle = () => {
+    // Base size for the preview
+    const baseSize = 120
+
+    if (isSquare) {
+      return {
+        width: `${baseSize}px`,
+        height: `${baseSize}px`,
+        className: "bg-blue-100 border border-blue-300 rounded flex items-center justify-center",
+      }
+    }
+
+    if (isVertical) {
+      return {
+        width: `${baseSize * aspectRatio}px`,
+        height: `${baseSize}px`,
+        className: "bg-green-100 border border-green-300 rounded flex items-center justify-center",
+      }
+    }
+
+    if (isWideFormat) {
+      return {
+        width: `${baseSize}px`,
+        height: `${baseSize / aspectRatio}px`,
+        className: "bg-purple-100 border border-purple-300 rounded flex items-center justify-center",
+      }
+    }
+
+    // Default horizontal format
+    return {
+      width: `${baseSize}px`,
+      height: `${baseSize / aspectRatio}px`,
+      className: "bg-blue-100 border border-blue-300 rounded flex items-center justify-center",
+    }
+  }
+
+  const previewStyle = getPreviewStyle()
+
+  // Determina o nome da proporção para exibição
+  const getAspectRatioName = () => {
+    if (isSquare) return "1:1"
+    if (isVertical) {
+      if (Math.abs(aspectRatio - 0.5625) < 0.05) return "9:16"
+      if (Math.abs(aspectRatio - 0.75) < 0.05) return "3:4"
+      return `${Math.round(aspectRatio * 100)}:100`
+    }
+    if (isWideFormat) {
+      if (Math.abs(aspectRatio - 3.2) < 0.1) return "16:5"
+      if (Math.abs(aspectRatio - 4) < 0.1) return "4:1"
+      return `${Math.round(aspectRatio * 10)}:10`
+    }
+    if (Math.abs(aspectRatio - 1.78) < 0.05) return "16:9"
+    if (Math.abs(aspectRatio - 1.33) < 0.05) return "4:3"
+    return `${Math.round(aspectRatio * 10)}:10`
+  }
 
   return (
     <div className="mt-4 p-3 border rounded-md bg-gray-50">
@@ -32,14 +86,13 @@ export function FormatoPreview({ formatConfig }: FormatoPreviewProps) {
       <div className="flex flex-col items-center">
         {/* Representação visual do formato */}
         <div
-          className={`bg-blue-100 border border-blue-300 rounded flex items-center justify-center ${sizeClass}`}
+          className={previewStyle.className}
           style={{
-            aspectRatio: `${width} / ${height}`,
+            width: previewStyle.width,
+            height: previewStyle.height,
           }}
         >
-          <span className="text-xs text-blue-700 text-center px-1 truncate">
-            {isVertical ? "9:16" : width / height >= 1.7 ? "16:9" : "4:3"}
-          </span>
+          <span className="text-xs text-center px-1 truncate">{getAspectRatioName()}</span>
         </div>
 
         {/* Detalhes do formato */}
@@ -58,14 +111,14 @@ export function FormatoPreview({ formatConfig }: FormatoPreviewProps) {
             <div className="flex justify-between">
               <span>Proporção:</span>
               <span className="font-medium">
-                {isVertical
-                  ? `9:16 (${aspectRatio.toFixed(2)}:1)`
-                  : `${Math.round(aspectRatio * 9)}:9 (${aspectRatio.toFixed(2)}:1)`}
+                {getAspectRatioName()} ({aspectRatio.toFixed(2)}:1)
               </span>
             </div>
             <div className="flex justify-between">
               <span>Orientação:</span>
-              <span className="font-medium">{isVertical ? "Vertical" : "Horizontal"}</span>
+              <span className="font-medium">
+                {isSquare ? "Quadrado" : isVertical ? "Vertical" : isWideFormat ? "Banner" : "Horizontal"}
+              </span>
             </div>
           </div>
         )}

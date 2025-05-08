@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/components/ui/use-toast"
-import { getFormatosPorPlataforma, opcoesDePlataformas } from "@/lib/config-plataformas"
+import { getFormatosPorPlataforma, opcoesDePlataformas, getConfigFormato } from "@/lib/config-plataformas"
 import { ProgressoGeracao } from "./progresso-geracao"
 import { useMutation } from "@tanstack/react-query"
 
@@ -28,6 +28,7 @@ interface FormatoSelecionado {
   selecionado: boolean
 }
 
+// Certifique-se de que a exportação esteja correta
 export function GeradorMultiFormatos({
   elementos,
   plataformaAtual,
@@ -78,27 +79,42 @@ export function GeradorMultiFormatos({
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
       // Gerar sugestões simuladas
-      const sugestoes = dados.formatosDestino.map((formato: any) => ({
-        formato: {
-          plataforma: formato.plataforma,
-          formato: formato.formato,
-          largura: formato.largura,
-          altura: formato.altura,
-        },
-        elementos: elementos.map((elemento) => ({
-          id: `${elemento.id}-${formato.formato}`,
-          tipo: elemento.tipo,
-          posicao: {
-            x: Math.floor(Math.random() * (formato.largura - 100)),
-            y: Math.floor(Math.random() * (formato.altura - 100)),
+      const sugestoes = dados.formatosDestino.map((formato: any) => {
+        // Calcular fator de escala entre o formato de origem e o formato de destino
+        const escalaX = formato.largura / dados.formatoOrigem.largura || 1
+        const escalaY = formato.altura / dados.formatoOrigem.altura || 1
+
+        return {
+          formato: {
+            plataforma: formato.plataforma,
+            formato: formato.formato,
+            largura: formato.largura,
+            altura: formato.altura,
           },
-          dimensoes: {
-            largura: Math.min(elemento.posicaoGrid?.width || 100, formato.largura / 4),
-            altura: Math.min(elemento.posicaoGrid?.height || 100, formato.altura / 4),
-          },
-          conteudo: elemento.conteudo,
-        })),
-      }))
+          elementos: elementos.map((elemento) => {
+            // Calcular novas posições e dimensões com base na escala
+            const posX = Math.floor((elemento.posicaoGrid?.x || 0) * escalaX * 50)
+            const posY = Math.floor((elemento.posicaoGrid?.y || 0) * escalaY * 50)
+            const largura = Math.floor((elemento.posicaoGrid?.width || 2) * escalaX * 50)
+            const altura = Math.floor((elemento.posicaoGrid?.height || 2) * escalaY * 50)
+
+            return {
+              id: `${elemento.id || "elem"}-${formato.formato}`,
+              tipo: elemento.tipo || "texto",
+              posicao: {
+                x: posX,
+                y: posY,
+              },
+              dimensoes: {
+                largura: largura,
+                altura: altura,
+              },
+              conteudo: elemento.conteudo || {},
+              camada: elemento.camada || 10,
+            }
+          }),
+        }
+      })
 
       return { sugestoes }
     },
@@ -143,10 +159,23 @@ export function GeradorMultiFormatos({
     setEtapaAtual(1)
     setMensagemProgresso("Preparando elementos...")
 
+    // Obter configuração do formato atual
+    const configAtual = getConfigFormato(plataformaAtual, formatoAtual)
+    if (!configAtual) {
+      toast({
+        title: "Erro",
+        description: "Não foi possível obter a configuração do formato atual.",
+        variant: "destructive",
+      })
+      return
+    }
+
     // Preparar dados para enviar à API
     const formatoOrigem = {
       plataforma: plataformaAtual,
       formato: formatoAtual,
+      largura: configAtual.width || 1080,
+      altura: configAtual.height || 1080,
     }
 
     const formatosDestino = formatosParaGerar.map((f) => ({
@@ -172,18 +201,23 @@ export function GeradorMultiFormatos({
     if (!elementos || !sugestao) return
 
     try {
-      // Adaptar elementos para o formato do editor
+      console.log("Aplicando sugestão:", sugestao)
+
+      // Converter os elementos do formato da sugestão para o formato do editor
       const elementosAdaptados = sugestao.elementos.map((elemento: any) => ({
-        ...elemento,
+        id: `elemento-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+        tipo: elemento.tipo,
         posicaoGrid: {
-          x: Math.floor(elemento.posicao.x / 100),
-          y: Math.floor(elemento.posicao.y / 100),
-          width: Math.floor(elemento.dimensoes.largura / 100),
-          height: Math.floor(elemento.dimensoes.altura / 100),
+          x: Math.floor(elemento.posicao.x / 50),
+          y: Math.floor(elemento.posicao.y / 50),
+          width: Math.max(1, Math.floor(elemento.dimensoes.largura / 50)),
+          height: Math.max(1, Math.floor(elemento.dimensoes.altura / 50)),
         },
+        conteudo: elemento.conteudo || {},
+        camada: elemento.camada || 10,
       }))
 
-      // Aplicar ao formato atual
+      // Aplicar ao formato selecionado
       onAplicarElementos(elementosAdaptados, sugestao.formato.formato)
 
       toast({
@@ -252,6 +286,14 @@ export function GeradorMultiFormatos({
                         <CardDescription className="text-xs">
                           {item.largura}x{item.altura}
                         </CardDescription>
+                        <div
+                          className="mt-2 border rounded bg-gray-50 mx-auto"
+                          style={{
+                            width: "80%",
+                            aspectRatio: `${item.largura} / ${item.altura}`,
+                            maxHeight: "80px",
+                          }}
+                        />
                       </CardHeader>
                       <CardFooter>
                         <div className="flex items-center space-x-2">
@@ -291,6 +333,14 @@ export function GeradorMultiFormatos({
                               <CardDescription className="text-xs">
                                 {item.largura}x{item.altura}
                               </CardDescription>
+                              <div
+                                className="mt-2 border rounded bg-gray-50 mx-auto"
+                                style={{
+                                  width: "80%",
+                                  aspectRatio: `${item.largura} / ${item.altura}`,
+                                  maxHeight: "80px",
+                                }}
+                              />
                             </CardHeader>
                             <CardFooter>
                               <div className="flex items-center space-x-2">
@@ -352,7 +402,8 @@ export function GeradorMultiFormatos({
                         className="border rounded-md p-2 bg-gray-50 relative"
                         style={{
                           width: "100%",
-                          height: "150px",
+                          aspectRatio: `${sugestao.formato.largura} / ${sugestao.formato.altura}`,
+                          maxHeight: sugestao.formato.altura > sugestao.formato.largura ? "200px" : "150px",
                           overflow: "hidden",
                         }}
                       >
@@ -366,6 +417,7 @@ export function GeradorMultiFormatos({
                               top: `${(elemento.posicao.y / sugestao.formato.altura) * 100}%`,
                               width: `${(elemento.dimensoes.largura / sugestao.formato.largura) * 100}%`,
                               height: `${(elemento.dimensoes.altura / sugestao.formato.altura) * 100}%`,
+                              zIndex: elemento.camada || 10,
                             }}
                           >
                             {elemento.tipo}
