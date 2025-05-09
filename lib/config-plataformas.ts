@@ -11,7 +11,7 @@ export const opcoesDePlataformas = [
 ];
 
 // Configuração de formatos por plataforma
-const formatosPorPlataforma = {
+export const formatosPorPlataforma = {
   instagram: [
     { nome: "feed-quadrado", largura: 1080, altura: 1080 },
     { nome: "feed-retrato", largura: 1080, altura: 1350 },
@@ -1350,6 +1350,55 @@ export function getFormatosPorPlataforma(plataforma: string): any[] {
     formatosPorPlataforma[plataforma as keyof typeof formatosPorPlataforma] ||
     []
   );
+}
+
+/**
+ * Verifica se um formato existe na configuração usando uma string no formato "plataforma/formato"
+ * @param formatoString Uma string no formato "plataforma/formato" (ex: "instagram/stories")
+ * @returns {boolean} Retorna true se o formato existir, false caso contrário
+ */
+export function verificarFormatoExiste(formatoString: string): boolean {
+  // Verifica se o formato é válido e tem o formato esperado
+  if (!formatoString || !formatoString.includes("/")) {
+    return false;
+  }
+
+  // Divide a string em plataforma e formato
+  const [plataforma, formato] = formatoString.split("/");
+
+  // Verifica se a plataforma existe
+  if (
+    !formatosPorPlataforma[plataforma as keyof typeof formatosPorPlataforma]
+  ) {
+    return false;
+  }
+
+  // Busca os formatos disponíveis para a plataforma
+  const formatosDisponiveis = getFormatosPorPlataforma(plataforma);
+
+  // Verifica se o formato existe na plataforma
+  return formatosDisponiveis.some((f) => f.nome === formato);
+}
+
+/**
+ * Verifica se um formato existe em qualquer plataforma
+ * @param formato Nome do formato a verificar
+ * @returns {boolean} Retorna true se o formato existir em qualquer plataforma, false caso contrário
+ */
+export function verificarFormatoExisteEmQualquerPlataforma(
+  formato: string
+): boolean {
+  if (!formato) return false;
+
+  // Verifica em todas as plataformas
+  for (const plataforma of Object.keys(formatosPorPlataforma)) {
+    const formatosDisponiveis = getFormatosPorPlataforma(plataforma);
+    if (formatosDisponiveis.some((f) => f.nome === formato)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 export function getConfigFormato(plataforma: string, formato: string): any {

@@ -59,7 +59,11 @@ export function GeradorMultiFormatos({
   elementos: any[];
   plataformaAtual: string;
   formatoAtual: string;
-  onAplicarElementos: (elementos: any[], formato: string) => void;
+  onAplicarElementos: (
+    elementos: any[],
+    formato: string,
+    plataforma: string
+  ) => void;
 }) {
   const { toast } = useToast();
   const [formatosSelecionados, setFormatosSelecionados] = useState<
@@ -77,13 +81,13 @@ export function GeradorMultiFormatos({
   // Função para verificar se o formato existe
   const verificarFormatoExiste = (plataforma: string, formato: string) => {
     try {
+      // Verificação mais simples usando diretamente getConfigFormato
       const config = getConfigFormato(plataforma, formato);
-      return config !== null && config !== undefined;
-    } catch (error) {
-      console.error(
-        `Erro ao verificar formato ${plataforma}/${formato}:`,
-        error
+      // Considera válido se tiver alguma propriedade além do objeto padrão
+      return (
+        config && config.elementosPadrao && config.elementosPadrao.length > 0
       );
+    } catch (error) {
       return false;
     }
   };
@@ -483,7 +487,11 @@ export function GeradorMultiFormatos({
       });
 
       // Aplicar ao formato selecionado
-      onAplicarElementos(elementosAdaptados, sugestao.formato.formato);
+      onAplicarElementos(
+        elementosAdaptados,
+        sugestao.formato.formato,
+        sugestao.formato.plataforma
+      );
 
       toast({
         title: "Sucesso",
@@ -519,6 +527,10 @@ export function GeradorMultiFormatos({
           );
 
           if (!configFormato) {
+            console.log({
+              plataforma: sugestao.formato.plataforma,
+              formato: sugestao.formato.formato,
+            });
             console.error(
               `Configuração do formato ${sugestao.formato.plataforma}/${sugestao.formato.formato} não encontrada.`
             );
@@ -605,7 +617,11 @@ export function GeradorMultiFormatos({
           });
 
           // Aplicar ao formato selecionado
-          onAplicarElementos(elementosAdaptados, sugestao.formato.formato);
+          onAplicarElementos(
+            elementosAdaptados,
+            sugestao.formato.formato,
+            sugestao.formato.plataforma
+          );
           aplicadasComSucesso++;
         } catch (error) {
           console.error(
